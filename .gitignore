@@ -1,0 +1,10 @@
+### Build ###
+*egg-info/
+build/
+dist/
+__pycache__/
+*.pyc
+functions.cpython*
+
+### Data Files ###
+/cnn

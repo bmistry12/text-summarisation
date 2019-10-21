@@ -116,9 +116,10 @@ Submission Deadline                     :         des1, 2020-03-27, 1d
 # Proposal
 In modern-day society, so much data available to us, and most of it is too long and laborious for the everyday person to read. Summaries have always proven to be the easiest and most practical method of allowing readers to understand aspects of documents. The appeal for a system that enables anyone to input text of any: size, format, or structure, and receive concise, well-structured summaries is valuable. 
 Over the past few years, a lot of text summarization algorithms have been implemented, with average performing extractive methods becoming trivial to implement. The main challenges with these methods are creating summaries that effectively convey the whole message in a human-like way. With the rise of deep learning, recurrent neural networks have been instrumental in driving abstractive based method, however there are still issues surrounding reproducing factual details and ensuring lack of repetition.  
-I am looking to explore various abstractive methods, from those with Sequence2Sequence based RNN's, to those that use tools such as TextRank, to find the best summarization method, given a particular text. The most challenging aspect will be creating machine learning models and finding a way to decide on the best method to use for a corpora. 
-Most of the literature I am planning to use are academic documentation, such as 'Abstractive Text Summarization using Sequence-to-sequence RNNs and Beyond.'
-
-# Proposal Re-worded
+As a consequence of discoviring this, I have chosen to experiment with the effect of combining abstractive and extractve methodologies.
 I am looking to build a Sequence2Sequence based Recurrent Neural Network (RNN), in order to create a model capable of abstractive text summarization. To enhance the model, I will experiment with adding in a group of traditionally extractive summarization based methods, such as TextRank and Ontology-based classification, to see how they impact the models’ overall performance, particularly when dealing with different types of data (e.g. academic papers rather than news articles).
 The most challenging part of this will be to create an initial machine learning model that can be easily adapted to accommodate for the introduction of these extractive 'modules'. Additionally, checking the minimised form of the text is grammatically and human-friendly will be quite challenging.
+
+# Old 
+I am looking to explore various abstractive methods, from those with Sequence2Sequence based RNN's, to those that use tools such as TextRank, to find the best summarization method, given a particular text. The most challenging aspect will be creating machine learning models and finding a way to decide on the best method to use for a corpora. 
+Most of the literature I am planning to use are academic documentation, such as 'Abstractive Text Summarization using Sequence-to-sequence RNNs and Beyond.'

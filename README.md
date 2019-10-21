@@ -77,8 +77,8 @@ Preliminary Project Plan                :done,    des1, 2019-10-13, 2019-10-21
 section Data                  
 Find Training Dataset                   :done,    des1, 2019-10-14, 2019-10-15
 Manual Look Through Of Dataset          :done,    des1, 2019-10-15, 2019-10-16
-Read In Data                            :active,  des1, 2019-10-19, 2019-10-21
-Clean/Shape Data                        :         des1, 2019-10-20, 2019-10-25
+Read In Data                            :done,    des1, 2019-10-19, 2019-10-21
+Clean/Shape Data                        :active   des1, 2019-10-20, 2019-10-25
 
 section Project Semester 1
 Basic Feature Phase                     :active,  des1, 2019-10-20, 2019-12-13

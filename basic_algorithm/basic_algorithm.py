@@ -64,7 +64,7 @@ def summarise(corpus):
 
 if __name__ == '__main__':
     corpus = []
-    filename = "summary.txt"
+    filename = "test.txt"
 
     for line in open(filename, 'r'):
         corpus.append(line)

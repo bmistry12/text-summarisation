@@ -1,19 +1,19 @@
 import os
 import sys
 import pandas
-import preprocessing as pre
+import dataProcessing as process
 
 def main():
     try:
         path = sys.argv[1]
         print(path)
         if (os.path.isdir(path)):
-            reader = pre.Read_Data(path)
-            reader.read_in_files()
-            data = reader.get_df()
-            cleaner = pre.Clean_Data(data)
+            readwrite = process.Read_Write_Data(path)
+            readwrite.read_in_files()
+            data = readwrite.get_df()
+            cleaner = process.Clean_Data(data)
             cleaner.clean_data()
-            cleaner.df_to_csv("test.csv")
+            readwrite.df_to_csv("test.csv")
             # cleaner.remove_stop_words()
         else :
             print(path + " is not a valid directory")

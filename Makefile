@@ -6,7 +6,7 @@ requirements:
 
 setup: 
 	python setup.py install
-	python -m nltk.downloader brown stopwords
+	python -m nltk.downloader stopwords wordnet
 
 run:
 	py main.py ${TRAIN_DATA_PATH}

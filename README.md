@@ -46,12 +46,12 @@ section Data
 Find Training Dataset                   :done,    des1, 2019-10-14, 2019-10-15
 Manual Look Through Of Dataset          :done,    des1, 2019-10-15, 2019-10-16
 Read In Data                            :done,    des1, 2019-10-19, 2019-10-21
-Clean/Shape Data                        :active   des1, 2019-10-20, 2019-10-25
+Clean/Shape Data                        :done,   des1, 2019-10-20, 2019-10-25
 
 section Project Semester 1
-Basic Feature Phase                     :active,  des1, 2019-10-20, 2019-12-13
-Removal of Stop Words                   :active   des1, 2019-10-23, 2019-10-25
-Lemmatization Of Text                   :         des1, 2019-10-24, 2019-10-27
+Removal of Stop Words                   :done,    des1, 2019-10-23, 2019-10-25
+Lemmatization Of Text                   :done,    des1, 2019-10-24, 2019-10-27
+Part Of Speech                          :done,    des1, 2019-10-25, 2019-10-27
 K-Folds Cross Validation Algorithm      :         des1, 2019-10-28, 2019-11-02
 RNN Seq2Seq Model                       :         des1, 2019-11-03, 2019-11-15
 Evaluation Method                       :         des1, 2019-11-15, 2019-11-20

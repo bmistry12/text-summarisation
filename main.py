@@ -4,6 +4,8 @@ import pandas
 import dataProcessing as process
 
 def main():
+    output_csv = "test.csv"
+    lemmatized_csv = "test-l.csv"
     try:
         path = sys.argv[1]
         print(path)
@@ -13,14 +15,14 @@ def main():
             data = readwrite.get_df()
             cleaner = process.Clean_Data(data)
             cleaner.clean_data()
-            readwrite.df_to_csv("test.csv")
+            readwrite.df_to_csv(output_csv)
             cleaner.remove_stop_words()
             cleaner.lemmatization(True)
             print(readwrite.get_df())
-            readwrite.df_to_csv("test-l.csv")
+            readwrite.df_to_csv(lemmatized_csv)
         else :
             print(path + " is not a valid directory")
     except Exception as e:
-        print("Error running applicaton - have you include a filepath?: " + str(e))
+        print("Error running applicaton: " + str(e))
 
 main()

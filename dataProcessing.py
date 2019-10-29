@@ -36,7 +36,7 @@ class Read_Write_Data():
 
 class Clean_Data():
 	"""
-	Use the data that is read in, as a pd df, and clfean it - remove any whitespace and empty columns
+	Use the data that is read in, as a pd df, and clean it - remove any whitespace and empty columns
 	Shape the data as necessary
 	Removal of stop words - Could this cause an issue when dealing with creating gramatically correct summaries?
 	Lemmatization
@@ -47,8 +47,9 @@ class Clean_Data():
 	def clean_data(self):
 		self.df.drop_duplicates(subset=['file'],inplace=True)  #dropping duplicates
 		self.df.dropna(axis=0,inplace=True)   #dropping na
-		self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|\n|[^\w\s]','',x))
-		self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s]','',x)).apply(lambda x: re.sub(r'@highlight','. ',x))
+		self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|[^\w\s\.]','',x)).apply(lambda x: re.sub(r'(\.(?=[\s\r\n]|$))','',x)).apply(lambda x: re.sub(r'\n',' ',x)).apply(lambda x: re.sub(r'\.','',x))
+		# separate the summaries using a '.' 
+		self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s\.\@]','',x)).apply(lambda x: re.sub(r'@highlight','. ',x))
 		print(self.df.head())
 
 	def remove_stop_words(self):

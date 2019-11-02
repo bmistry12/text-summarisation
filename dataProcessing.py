@@ -68,7 +68,7 @@ class Clean_Data():
 		if pos in wordnet_conv.keys():
 			return wordnet_conv.get(pos)
 		return ""
-		# wordnet pos can't deal withL "I" - Preposition, "M" - modal, "C" - conjunction, "P" - pronoun
+		# wordnet pos can't deal with "I" - Preposition, "M" - modal, "C" - conjunction, "P" - pronoun
 
 	def lemmatization(self, pos):
 		"""
@@ -95,3 +95,29 @@ class Clean_Data():
 			print("lemmatize w/o POS")
 			self.df['text'] = text_tokenized.apply(lambda x: [lemmatizer.lemmatize(w) for w in x])
 
+class Manage_Data():
+	def __init__(self, df):
+		self.df = df
+
+	def getVocabSize(self):
+		word_dict = {}
+		text = self.df['text']
+		summary = self.df['summary']
+
+		for row in text: 
+			for word in row.split(" "):
+				if word not in word_dict:
+					word_dict[word] = 1
+				else:
+					word_dict[word] += 1
+		
+		for row in summary: 
+			for word in row.split(" "):
+				if word not in word_dict:
+					word_dict[word] = 1
+				else:
+					word_dict[word] += 1
+
+		return len(word_dict)
+		
+		

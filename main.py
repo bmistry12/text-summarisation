@@ -1,6 +1,7 @@
 import os
 import sys
 import pandas
+# import model as model
 import dataProcessing as process
 
 def main():
@@ -15,14 +16,21 @@ def main():
             data = readwrite.get_df()
             cleaner = process.Clean_Data(data)
             cleaner.clean_data()
-            readwrite.df_to_csv(output_csv)
             cleaner.remove_stop_words()
             cleaner.lemmatization(True)
+            data = readwrite.get_df()
             print(readwrite.get_df())
             readwrite.df_to_csv(lemmatized_csv)
+            manage = process.Manage_Data(data)
+            vocab_size = manage.getVocabSize()
+            print(vocab_size)
+            # model = model.Seq2SeqRNN(data, vocab_size)
+            # model.run_model()
+
         else :
             print(path + " is not a valid directory")
     except Exception as e:
         print("Error running applicaton: " + str(e))
 
-main()
+if __name__ == "__main__":
+    main()

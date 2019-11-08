@@ -6,10 +6,14 @@ import dataProcessing as process
 
 def main():
     output_csv = "test.csv"
-    lemmatized_csv = "test-l.csv"
     try:
         path = sys.argv[1]
         print(path)
+        try :
+            output_csv = sys.argv[2]
+            print(output_csv)
+        except Exception as e:
+            print("Not output csv specified - using default")
         if (os.path.isdir(path)):
             readwrite = process.Read_Write_Data(path)
             readwrite.read_in_files()
@@ -20,10 +24,10 @@ def main():
             cleaner.lemmatization(True)
             data = readwrite.get_df()
             print(readwrite.get_df())
-            readwrite.df_to_csv(lemmatized_csv)
-            manage = process.Manage_Data(data)
-            vocab_size = manage.getVocabSize()
-            print(vocab_size)
+            readwrite.df_to_csv(output_csv)
+            # manage = process.Manage_Data(data)
+            # vocab_size = manage.getVocabSize()
+            # print(vocab_size)
             # model = model.Seq2SeqRNN(data, vocab_size)
             # model.run_model()
 

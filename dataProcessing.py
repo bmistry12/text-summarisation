@@ -20,7 +20,7 @@ class Read_Write_Data():
 
 	def read_in_files(self):
 		for file in self.file_names:
-			with open(self.datapath + "/" + file) as f:
+			with open(self.datapath + "/" + file, encoding="utf8") as f:
 				data = f.read()
 				# 0 - body, 1 - summary
 				data_split = re.split("@highlight", data, maxsplit=1)

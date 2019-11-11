@@ -49,15 +49,17 @@ class Clean_Data():
 		self.df.dropna(axis=0,inplace=True)   #dropping na
 		self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|[^\w\s\.]','',x)).apply(lambda x: re.sub(r'(\.(?=[\s\r\n]|$))','',x)).apply(lambda x: re.sub(r'\n',' ',x)).apply(lambda x: re.sub(r'\.','',x))
 		# separate the summaries using a '.' 
-		self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s\.\@]','',x)).apply(lambda x: re.sub(r'@highlight','. ',x))
+		self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s\.\@]','',x)).apply(lambda x: re.sub(r'@highlight',' ',x))
+		print("cleaned data")
 		print(self.df.head())
 
 	def remove_stop_words(self):
 		"""
-		remove stop words from the text	
+		remove stop words from the text	and summaries
 		"""
 		stop_words = set(stopwords.words('english'))
 		self.df['text'] = self.df['text'].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: " ".join([word for word in x if not word in stop_words]))
+		self.df['summary'] = self.df['summary'].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: " ".join([word for word in x if not word in stop_words]))		
 		print(self.df['text'])
 		print(self.df.head())
 		print("removed stop words")

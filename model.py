@@ -4,7 +4,7 @@ import numpy as np
 from keras.models import Model
 from keras.layers import LSTM, Dense, Input, Concatenate, Embedding
 from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.seqeuence import pad_sequences
+# from keras.preprocessing.seqeuence import pad_sequences
 from keras.callbacks import EarlyStopping
 from sklearn.model_selection import train_test_split
 
@@ -13,7 +13,7 @@ class Seq2SeqRNN():
     def __init__(self, dataframe, vocab_size, batch_size, epochs, latent_dim, embedding_dim, traintest_split):
         self.df = dataframe
         self.df_shape = self.df.shape
-        self.vocab_size = vocab_size
+        self.max_text_seq_length, self.max_summary_seq_length = vocab_size
         self.batch_size = batch_size
         self.epochs = epochs
         self.latent_dim = latent_dim
@@ -23,14 +23,14 @@ class Seq2SeqRNN():
 
     def model(self, dropout):
         # encoder
-        encoder_inputs = Input(shape=(max_text_len, ))
+        encoder_inputs = Input(shape=(self.max_text_seq_length, ))
         encoder_embedding = Embedding(x_vocab, self.embedding_dim, trainable=True)(encoder_inputs)
         encoder_lstm = LSTM(self.latent_dim, return_sequences=True, dropout=dropout, recurrent_dropout=dropout)
         encoder_outputs, state_h, state_c = encoder_lstm(encoder_embedding)
 
         # decoder, use encoder_states as initial state.
         decoder_inputs = Input(shape=(None,))
-        decoder_embedding = Embedding(y_vocab, embedding_dim, trainable=True)(decoder_inputs)
+        decoder_embedding = Embedding(y_vocab, self.embedding_dim, trainable=True)(decoder_inputs)
         decoder_lstm = LSTM(self.latent_dim, return_sequences=True, dropout=dropout, recurrent_dropout=dropout/2)
         decoder_outputs, decoder_fwd_state, decoder_back_state = decoder_lstm(decoder_embedding, initial_state=[state_h, state_c])
 
@@ -43,7 +43,7 @@ class Seq2SeqRNN():
         self.training_model.compile(optimizer='rmsprop', loss='sparse_categorical_crossentropy')
         print(model.summary())
         
-    def inference_model(self):
+    def inference_model(self)
         reverse_target_word_index = y_tokenizer.index_word
         reverse_source_word_index = x_tokenizer.index_word
         target_word_index = y_tokenizer.word_index
@@ -70,7 +70,7 @@ class Seq2SeqRNN():
         self.decoder_model = Model([decoder_inputs] + [decoder_hidden_state_input, decoder_state_input_h, decoder_state_input_c], [decoder_outputs2] + [state_h2, state_c2])
         self.decoder_model.summary()
 
-    def seq2summary(input_seq):
+    def seq2summary(self, input_seq):
         newString = ''
         for i in input_seq:
             if(i != 0):
@@ -78,7 +78,7 @@ class Seq2SeqRNN():
         return newString
 
 
-    def seq2text(input_seq):
+    def seq2text(self, input_seq):
         newString = ''
         for i in input_seq:
             if(i != 0):

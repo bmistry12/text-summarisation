@@ -26,9 +26,9 @@ def main():
             print(readwrite.get_df())
             readwrite.df_to_csv(output_csv)
             # manage = process.Manage_Data(data)
-            # vocab_size = manage.getVocabSize()
+            # vocab_size = manage.getMaxSize()
             # print(vocab_size)
-            # model = model.Seq2SeqRNN(data, vocab_size)
+            # model = model.Seq2SeqRNN(data, vocab_size, 60, 25, 100, 200, 0.35)
             # model.run_model()
 
         else :

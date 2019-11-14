@@ -81,3 +81,23 @@ Demo Week                               :         des1, 2020-03-17, 2020-03-21
 Tweaks Based On Feedback                :         des1, 2020-03-21, 2020-03-26
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
+
+
+### Flow
+
+- Data processing
+    - Read in data
+    - Clean data
+        - POS
+        - Lemmatization
+        - Stop Word Removal
+    - Reshape data    
+- Write dataframe to CSV
+- Read CSV into model
+- Model 
+    - word embeddings
+    - encoder
+    - decoder
+    - inference model
+    - evaluation
+

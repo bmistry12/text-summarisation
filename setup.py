@@ -9,6 +9,6 @@ setup(
     author='bmistry12',
     # python_requires='3.5.0',
     py_modules=['main'],
-    install_requires=['numpy', 'pandas', 'sklearn', 'keras', 'matplotlib'],
+    install_requires=['numpy', 'pandas', 'sklearn', 'keras', 'matplotlib', 'pickle', 'jupyterlab'],
     include_package_data=True,
 )

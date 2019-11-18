@@ -8,7 +8,7 @@ requirements:
 
 setup: 
 	python setup.py install
-	python -m nltk.downloader stopwords wordnet
+	python -m nltk.downloader stopwords wordnet punkt
 
 run:
 	py main.py ${TRAIN_DATA_PATH} ${OUTPUT_CSV}

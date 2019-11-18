@@ -2,6 +2,7 @@ import os
 import sys
 import pandas
 # import model as model
+# import test_model as testModel
 import dataProcessing as process
 
 def main():
@@ -30,6 +31,16 @@ def main():
             # print(vocab_size)
             # model = model.Seq2SeqRNN(data, vocab_size, 60, 25, 100, 200, 0.35)
             # model.run_model()
+            # model.save_model()
+            # test = testModel.TestModel()
+            # testModel.getInput()
+            # cleaner.clean_data()
+            # cleaner.remove_stop_words()
+            # cleaner.lemmatization(True)
+            # new_data = readwrite.get_df()
+            # testModel.summarize(new_data)
+            # evaluate = evaluate.Evaluate()
+            # evaluate.rogue()
 
         else :
             print(path + " is not a valid directory")

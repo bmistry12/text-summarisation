@@ -53,6 +53,7 @@ Removal of Stop Words                   :done,    des1, 2019-10-23, 2019-10-25
 Lemmatization Of Text                   :done,    des1, 2019-10-24, 2019-10-27
 Part Of Speech                          :done,    des1, 2019-10-25, 2019-10-27
 RNN Seq2Seq Model                       :active,  des1, 2019-10-28, 2019-11-02
+Setup Full Working Flow                 :active,  des1, 2019-11-11, 2019-11-22
 K-Folds Cross Validation Algorithm      :         des1, 2019-11-03, 2019-11-15
 Evaluation Method                       :         des1, 2019-11-15, 2019-11-20
 Experimenting with WordEmbeddings       :         des1, 2019-11-20, 2019-11-25

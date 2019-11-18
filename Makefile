@@ -4,10 +4,10 @@ TRAIN_DATA_PATH="./cnn/0"
 OUTPUT_CSV="data0.csv"
 
 requirements:
-	pip install -r requirements.txt
+	pip install -r requirements.txt --user
 
 setup: 
-	python setup.py install
+	python setup.py install --user
 	python -m nltk.downloader stopwords wordnet punkt
 
 run:

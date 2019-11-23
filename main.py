@@ -6,6 +6,7 @@ import pandas
 import dataProcessing as process
 
 def main():
+    print("hello!")
     output_csv = "test.csv"
     try:
         path = sys.argv[1]
@@ -17,15 +18,26 @@ def main():
             print("Not output csv specified - using default")
         if (os.path.isdir(path)):
             readwrite = process.Read_Write_Data(path)
+            print("read in files")
             readwrite.read_in_files()
+            print("done reading files")
             data = readwrite.get_df()
+            print (data.head())
             cleaner = process.Clean_Data(data)
+            print("clean data")
             cleaner.clean_data()
+            print("done cleaning data")
+            print("remove stop words")
             cleaner.remove_stop_words()
+            print("done removing stop words")
+            print("lemmatize")
             cleaner.lemmatization(True)
+            print("done lemmatizing")
             data = readwrite.get_df()
             print(readwrite.get_df())
+            print("output to csv")
             readwrite.df_to_csv(output_csv)
+            print("done all")
             # manage = process.Manage_Data(data)
             # vocab_size = manage.getMaxSize()
             # print(vocab_size)

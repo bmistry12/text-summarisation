@@ -18,13 +18,17 @@ class Read_Write_Data():
 		self.df = pd.DataFrame(columns=['file', 'text', 'summary'])
 	
 	def read_in_files(self):
-		for file in self.file_names:
+		files_to_read = self.file_names[:10000]
+		print(len(files_to_read))
+		for file in files_to_read:
 			with open(self.datapath + "/" + file, encoding="utf8") as f:
 				data = f.read()
 				# 0 - body, 1 - summary
 				data_split = re.split("@highlight", data, maxsplit=1)
 				# appending to df 
 				self.df = self.df.append({'file': file, 'text': str(data_split[0]), 'summary': str(data_split[1])}, ignore_index=True)
+		print("read in files")
+		print(self.df.head())
 
 	def get_df(self):
 		return self.df
@@ -76,6 +80,7 @@ class Clean_Data():
 		lemmatization of text - uses wordnet lemmatizer
 		@pos - value can be True or False. Used to indicate whether or not to use POS whilst lemmatizing
 		"""
+		# Should we not also lemmatize summaries?
 		lemmatizer = WordNetLemmatizer()
 		text_tokenized = self.df['text'].apply(lambda x: nltk.word_tokenize(x))
 		if pos:
@@ -94,7 +99,9 @@ class Clean_Data():
 				self.df['text'][i] = text_lemmatized
 		else :	
 			print("lemmatize w/o POS")
+			# This currently doesn't output text in the right format (I think)
 			self.df['text'] = text_tokenized.apply(lambda x: [lemmatizer.lemmatize(w) for w in x])
+			self.df['text'] = self.df['text'].apply(lambda x: ' '.join(x))
 
 class Manage_Data():
 	def __init__(self, df):

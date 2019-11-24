@@ -17,9 +17,8 @@ class Read_Write_Data():
 		self.file_names = [file for file in os.listdir(loc) if file.endswith('.story')]
 		self.df = pd.DataFrame(columns=['file', 'text', 'summary'])
 	
-	def read_in_files(self):
-		# files_to_read = self.file_names[:filesToRead]
-		files_to_read = self.file_names
+	def read_in_files(self, filesToRead):
+		files_to_read = self.file_names[:filesToRead]
 		print(len(files_to_read))
 		for file in files_to_read:
 			with open(self.datapath + "/" + file, encoding="utf8") as f:

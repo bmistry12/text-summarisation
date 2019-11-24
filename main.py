@@ -19,7 +19,7 @@ def main():
         if (os.path.isdir(path)):
             readwrite = process.Read_Write_Data(path)
             print("read in files")
-            readwrite.read_in_files()
+            readwrite.read_in_files(5000)
             print("done reading files")
             data = readwrite.get_df()
             print (data.head())

@@ -18,7 +18,8 @@ class Read_Write_Data():
 		self.df = pd.DataFrame(columns=['file', 'text', 'summary'])
 	
 	def read_in_files(self):
-		files_to_read = self.file_names[:10000]
+		# files_to_read = self.file_names[:filesToRead]
+		files_to_read = self.file_names
 		print(len(files_to_read))
 		for file in files_to_read:
 			with open(self.datapath + "/" + file, encoding="utf8") as f:

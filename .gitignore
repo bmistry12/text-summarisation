@@ -11,6 +11,7 @@ functions.cpython*
 /cnn_small
 *.csv
 /model
+/data
 
 ### Notes ###
 NOTES*

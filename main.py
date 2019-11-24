@@ -31,7 +31,7 @@ def main():
             cleaner.remove_stop_words()
             print("done removing stop words")
             print("lemmatize")
-            cleaner.lemmatization(True)
+            # cleaner.lemmatization(True)
             print("done lemmatizing")
             data = readwrite.get_df()
             print(readwrite.get_df())
@@ -53,7 +53,6 @@ def main():
             # testModel.summarize(new_data)
             # evaluate = evaluate.Evaluate()
             # evaluate.rogue()
-
         else :
             print(path + " is not a valid directory")
     except Exception as e:

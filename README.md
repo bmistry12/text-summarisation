@@ -52,12 +52,11 @@ section Project Semester 1
 Removal of Stop Words                   :done,    des1, 2019-10-23, 2019-10-25
 Lemmatization Of Text                   :done,    des1, 2019-10-24, 2019-10-27
 Part Of Speech                          :done,    des1, 2019-10-25, 2019-10-27
-K-Folds Cross Validation Algorithm      :         des1, 2019-10-28, 2019-11-02
-RNN Seq2Seq Model                       :         des1, 2019-11-03, 2019-11-15
-Evaluation Method                       :         des1, 2019-11-15, 2019-11-20
-Experimenting with WordEmbeddings       :         des1, 2019-11-20, 2019-11-25
-Experimenting with N-Words              :         des1, 2019-11-26, 2019-11-30
-Improving the Model                     :         des1, 2019-12-01, 2019-12-13
+RNN Seq2Seq Model                       :done,    des1, 2019-10-28, 2019-11-02
+Setup Full Working Flow                 :active,  des1, 2019-11-11, 2019-11-24
+K-Folds Cross Validation Algorithm      :         des1, 2019-11-18, 2019-11-25
+Evaluation Method                       :active,  des1, 2019-11-15, 2019-11-25
+Improving/Fixing the Model              :active,  des1, 2019-11-20, 2019-12-13
 Inspection Week                         :         des1, 2019-12-13, 2019-12-06
 Working Prototype                       :         des1, 2019-12-06, 2019-12-13
 End Of Semester 1                       :         des1, 2019-12-13, 1d
@@ -68,6 +67,8 @@ Ontology Based Classification           :         des1, 2020-01-15, 2020-01-20
 Experimenting with TextRank             :         des1, 2020-01-22, 2020-01-26
 Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
 Adding in some more Extractive methods  :         des1, 2020-02-05, 2020-02-20
+Experimenting with WordEmbeddings       :         des1, 2020-02-05, 2020-02-13
+Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19
 Experimenting with Catch Phrases        :         des1, 2020-02-05, 2020-02-08
 Experimenting with Grammar based methods:         des1, 2020-02-09, 2020-02-15
 Testing the model with different data   :         des1, 2020-02-15, 2020-02-20 
@@ -81,3 +82,23 @@ Demo Week                               :         des1, 2020-03-17, 2020-03-21
 Tweaks Based On Feedback                :         des1, 2020-03-21, 2020-03-26
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
+
+
+### Flow
+
+- Data processing
+    - Read in data
+    - Clean data
+        - POS
+        - Lemmatization
+        - Stop Word Removal
+    - Reshape data    
+- Write dataframe to CSV
+- Read CSV into model
+- Model 
+    - word embeddings
+    - encoder
+    - decoder
+    - inference model
+    - evaluation
+

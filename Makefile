@@ -1,7 +1,7 @@
 # Change by passing in TRAIN_DATA_PATH=<> via make command
 # TRAIN_DATA_PATH="./cnn_small"
 TRAIN_DATA_PATH="./cnn/originals"
-OUTPUT_CSV="./data/originals-nol.csv"
+OUTPUT_CSV="./data/originals-10000-l.csv"
 
 requirements:
 	pip install -r requirements.txt --user

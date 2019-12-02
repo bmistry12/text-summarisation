@@ -6,6 +6,9 @@ __pycache__/
 *.pyc
 functions.cpython*
 
+# Jupyter Notebook
+.ipynb_checkpoints
+
 ### Data Files ###
 /cnn
 /cnn_small

@@ -37,11 +37,11 @@ sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 # In[3]:
 
 
-BATCH_SIZE=35
-EPOCHS=2
+BATCH_SIZE=20
+EPOCHS=100
 latent_dim=128
 embedding_dim=128
-test_train_split=0.15
+test_train_split=0.30
 build_number="1"
 # LEARNING_RATE=0.0001
 

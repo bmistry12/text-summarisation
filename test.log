@@ -1,0 +1,107 @@
+Device mapping:
+/job:localhost/replica:0/task:0/device:XLA_GPU:0 -> device: XLA_GPU device
+/job:localhost/replica:0/task:0/device:XLA_CPU:0 -> device: XLA_CPU device
+/job:localhost/replica:0/task:0/device:GPU:0 -> device: 0, name: GeForce RTX 2060, pci bus id: 0000:01:00.0, compute capability: 7.5
+Syrian official Obama climbed top tree doesnt know get Obama sends letter heads House Senate Obama seek congressional approval military action Syria Aim determine whether CW used says U.N. spokesman
+Syrian official Obama climbed top tree doesnt know get Obama sends letter heads House Senate Obama seek congressional approval military action Syria Aim determine whether CW used says UN spokesman
+True
+(4000, 4)
+(3, 4)
+(3997, 4)
+False
+7823
+333
+(2797,)
+(1200,)
+(2797,)
+(1200,)
+72199
+23202
+Model: "model_1"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_1 (InputLayer)            (None, 7823)         0                                            
+__________________________________________________________________________________________________
+input_2 (InputLayer)            (None, None)         0                                            
+__________________________________________________________________________________________________
+embedding_1 (Embedding)         (None, 7823, 128)    9241472     input_1[0][0]                    
+__________________________________________________________________________________________________
+embedding_2 (Embedding)         (None, None, 128)    2969856     input_2[0][0]                    
+__________________________________________________________________________________________________
+lstm_1 (LSTM)                   [(None, 7823, 128),  131584      embedding_1[0][0]                
+__________________________________________________________________________________________________
+lstm_2 (LSTM)                   [(None, None, 128),  131584      embedding_2[0][0]                
+                                                                 lstm_1[0][1]                     
+                                                                 lstm_1[0][2]                     
+__________________________________________________________________________________________________
+dense_1 (Dense)                 (None, None, 23202)  2993058     lstm_2[0][0]                     
+==================================================================================================
+Total params: 15,467,554
+Trainable params: 15,467,554
+Non-trainable params: 0
+__________________________________________________________________________________________________
+None
+Model: "model_1"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+input_1 (InputLayer)         (None, 7823)              0         
+_________________________________________________________________
+embedding_1 (Embedding)      (None, 7823, 128)         9241472   
+_________________________________________________________________
+lstm_1 (LSTM)                [(None, 7823, 128), (None 131584    
+=================================================================
+Total params: 9,373,056
+Trainable params: 9,373,056
+Non-trainable params: 0
+_________________________________________________________________
+Model: "model_2"
+__________________________________________________________________________________________________
+Layer (type)                    Output Shape         Param #     Connected to                     
+==================================================================================================
+input_2 (InputLayer)            (None, None)         0                                            
+__________________________________________________________________________________________________
+embedding_2 (Embedding)         (None, None, 128)    2969856     input_2[0][0]                    
+__________________________________________________________________________________________________
+input_3 (InputLayer)            (None, 128)          0                                            
+__________________________________________________________________________________________________
+input_4 (InputLayer)            (None, 128)          0                                            
+__________________________________________________________________________________________________
+lstm_2 (LSTM)                   [(None, None, 128),  131584      embedding_2[1][0]                
+                                                                 input_3[0][0]                    
+                                                                 input_4[0][0]                    
+__________________________________________________________________________________________________
+dense_1 (Dense)                 (None, None, 23202)  2993058     lstm_2[1][0]                     
+==================================================================================================
+Total params: 6,094,498
+Trainable params: 6,094,498
+Non-trainable params: 0
+__________________________________________________________________________________________________
+Article: the transportation security administration say friday start process fire 25 agent suspend 19 others follow screen procedure the 44 employee work checkedbaggage screen room terminal b newarks liberty international airport tsa spokesman david castelveter told cnn write statement in november december 2011 caught surveillance camera follow proper screen protocol agency internal investigation reveal after passenger check bag tsa screener suppose search luggage electronic scanner open bag hand in case employee allegedly didnt follow procedure 250 bag two month agency say all bag receive screen however the punishment mark large removal suspension tsa officer agency history part large internal crackdown improper behavior tsa agent accountability important aspect work take appropriate action employee follow procedure engages misconduct castelveter say in june investigation prompt agency fire eight checkedbaggage screener newark violate tsa procedure include sleep job that month 43 tsa worker fort myers florida discipline perform additional screen random passenger carryon bag at bostons logan airport 20 checkedbaggage screener punish august reading newspaper talk phone suppose screen bag reporting misconduct spokesperson told cnn time and last year 36 checkedbag screener hawaii fire caught security camera 2010 ignore procedure include put bag inspection notice bag without actually inspect inspector general report say tsa screener put inspection notice bag didnt inspect tsa reprimand bag screener job performance boston airport speedier trip airport security could come within decade tsa behavior detection officer retrain profile complaint 
+Original summary: the tsa says 44 employees newarks airport follow screening procedures it plans fire 25 suspend 19 procedures followed 250 bags two months tsa says 
+1870
+1870
+1870
+1870
+1870
+1870
+1870
+1870
+1870
+1870
+Generated summary:  funeral funeral funeral funeral funeral funeral funeral funeral funeral funeral
+
+
+2797
+0
+1870
+1870
+1870
+1870
+1870
+1870
+1870
+1870
+1870
+1870

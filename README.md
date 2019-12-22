@@ -19,7 +19,7 @@
     ```
 - To alter runtime variables
     ```
-    make run TRAIN_DATA_PATH=<>
+    make run TRAIN_DATA_PATH=<> OUTPUT_CSV=<>
     ```
 
 ### Proposal
@@ -55,11 +55,11 @@ Part Of Speech                          :done,    des1, 2019-10-25, 2019-10-27
 RNN Seq2Seq Model                       :done,    des1, 2019-10-28, 2019-11-02
 Setup Full Working Flow                 :active,  des1, 2019-11-11, 2019-11-24
 K-Folds Cross Validation Algorithm      :         des1, 2019-11-18, 2019-11-25
-Evaluation Method                       :active,  des1, 2019-11-15, 2019-11-25
+Evaluation Method                       :done,  des1, 2019-11-15, 2019-11-25
 Improving/Fixing the Model              :active,  des1, 2019-11-20, 2019-12-13
-Inspection Week                         :         des1, 2019-12-13, 2019-12-06
-Working Prototype                       :         des1, 2019-12-06, 2019-12-13
-End Of Semester 1                       :         des1, 2019-12-13, 1d
+Inspection Week                         :done    des1, 2019-12-13, 2019-12-06
+Working Prototype                       :active, des1, 2019-12-06, 2019-12-13
+End Of Semester 1                       :done,      des1, 2019-12-13, 1d
 
 section Project Semester 2
 Start of Semester 2                     :         des1, 2020-01-13, 1d

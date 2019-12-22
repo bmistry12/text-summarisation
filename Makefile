@@ -1,7 +1,8 @@
-# Change by passing in TRAIN_DATA_PATH=<> via make command
-# TRAIN_DATA_PATH="./cnn_small"
+# This Makefile allows you to process data
+
+# Change by passing in TRAIN_DATA_PATH=<> / OUTPUT_CSV=<> via make command
 TRAIN_DATA_PATH="./cnn/originals"
-OUTPUT_CSV="./data/originals-10000-l.csv"
+OUTPUT_CSV="./data/originals-l.csv"
 
 requirements:
 	pip install -r requirements.txt --user

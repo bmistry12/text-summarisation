@@ -53,12 +53,13 @@ Removal of Stop Words                   :done,    des1, 2019-10-23, 2019-10-25
 Lemmatization Of Text                   :done,    des1, 2019-10-24, 2019-10-27
 Part Of Speech                          :done,    des1, 2019-10-25, 2019-10-27
 RNN Seq2Seq Model                       :done,    des1, 2019-10-28, 2019-11-02
-Setup Full Working Flow                 :active,  des1, 2019-11-11, 2019-11-24
+Setup Full Working Flow                 :done,    des1, 2019-11-11, 2019-11-24
 K-Folds Cross Validation Algorithm      :         des1, 2019-11-18, 2019-11-25
-Evaluation Method                       :active,  des1, 2019-11-15, 2019-11-25
-Improving/Fixing the Model              :active,  des1, 2019-11-20, 2019-12-13
-Inspection Week                         :         des1, 2019-12-13, 2019-12-06
-Working Prototype                       :         des1, 2019-12-06, 2019-12-13
+Evaluation Method                       :done,    des1, 2019-11-15, 2019-11-25
+Improving/Fixing the Model              :done,    des1, 2019-11-20, 2019-12-13
+Inspection Week                         :done,    des1, 2019-12-13, 2019-12-06
+Bidirectional Model                     :done,    des1, 2019-12-08, 2019-12-03
+Working Prototype                       :done,    des1, 2019-12-13, 2019-12-06
 End Of Semester 1                       :         des1, 2019-12-13, 1d
 
 section Project Semester 2
@@ -83,6 +84,60 @@ Tweaks Based On Feedback                :         des1, 2020-03-21, 2020-03-26
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
 
+### Actual Outcome
+
+```mermaid
+gantt
+dateFormat  YYYY-MM-DD
+title Projet Outcome Timeline
+
+section Planning
+Literature Reading                      :active,  des1, 2019-10-13, 2019-10-26
+Project Proposal                        :done,    des1, 2019-10-20, 2019-10-22
+Preliminary Project Plan                :done,    des1, 2019-10-13, 2019-10-21
+
+section Data                  
+Find Training Dataset                   :done,    des1, 2019-10-14, 2019-10-15
+Manual Look Through Of Dataset          :done,    des1, 2019-10-15, 2019-10-16
+Read In Data                            :done,    des1, 2019-10-19, 2019-10-21
+Clean/Shape Data                        :done,    des1, 2019-10-20, 2019-10-25
+
+section Project Semester 1
+Removal of Stop Words                   :done,    des1, 2019-10-23, 2019-10-25
+Lemmatization Of Text                   :done,    des1, 2019-10-24, 2019-10-27
+Part Of Speech                          :done,    des1, 2019-10-25, 2019-10-27
+RNN Seq2Seq Uni Directional Model       :done,    des1, 2019-10-28, 2019-11-08
+Debbugging the Model                    :done,    des1, 2019-11-08, 2020-01-03
+Setup Full Working Flow                 :done,    des1, 2019-11-14, 2019-11-24
+Improving/Fixing the Model              :done,    des1, 2019-11-25, 2019-12-03
+Evaluation Method                       :done,    des1, 2019-11-23, 2019-12-29
+Project Inspection                      :done,    des1, 2019-12-11, 1d
+Working Prototype                       :done,    des1, 2019-12-13, 2019-12-06
+Bidirectional Model                     :done,    des1, 2020-01-03, 2020-01-04
+End Of Semester 1                       :         des1, 2019-12-13, 1d
+
+section Project Semester 2
+Start of Semester 2                     :         des1, 2020-01-13, 1d
+K-Folds Cross Validation Algorithm      :         des1, 2020-01-13, 2020-01-16
+Ontology Based Classification           :         des1, 2020-01-16, 2020-01-20
+Experimenting with TextRank             :         des1, 2020-01-22, 2020-01-26
+Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
+Adding in some more Extractive methods  :         des1, 2020-02-05, 2020-02-20
+Experimenting with WordEmbeddings       :         des1, 2020-02-05, 2020-02-13
+Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19
+Experimenting with Catch Phrases        :         des1, 2020-02-05, 2020-02-08
+Experimenting with Grammar based methods:         des1, 2020-02-09, 2020-02-15
+Testing the model with different data   :         des1, 2020-02-15, 2020-02-20 
+Front End Implementation                :         des1, 2020-02-20, 2020-02-28
+Experimental Features Coding Completion :         des1, 2020-02-29, 1d
+
+Section Finalising
+Project Refractoring                    :         des1, 2020-03-01, 2020-03-08
+Documentation                           :         des1, 2020-03-10, 2020-03-21
+Demo Week                               :         des1, 2020-03-17, 2020-03-21
+Tweaks Based On Feedback                :         des1, 2020-03-21, 2020-03-26
+Submission Deadline                     :         des1, 2020-03-27, 1d
+```
 
 ### Flow
 

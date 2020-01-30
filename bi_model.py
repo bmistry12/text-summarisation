@@ -13,7 +13,6 @@ import pickle
 import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt
-!python -m nltk.downloader stopwords wordnet punkt averaged_perceptron_tagger
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet as wn
 from nltk.stem import WordNetLemmatizer
@@ -27,7 +26,6 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.optimizers import RMSprop
 from sklearn.model_selection import train_test_split
-!pip install rouge
 from rouge import Rouge
 
 """### Hyperparameters"""
@@ -58,7 +56,7 @@ if COLAB:
   drive.mount('/content/drive')
   PATH = "./drive/My Drive/"
 
-df.pd_read_csv(PATH + FILE_NAME)
+df = pd.read_csv(PATH + FILE_NAME)
 
 print(df.head())
 print(df.count)
@@ -196,7 +194,7 @@ Y - Summaries
 X = np.array(df['text'])
 Y = np.array(df['summary'])
 
-x_tr,x_val,y_tr,y_val=train_test_split(X,Y,test_size=test_train_split,random_state=0,shuffle=True)
+x_tr,x_val,y_tr,y_val=train_test_split(X,Y,test_size=TEST_TRAIN_SPLIT,random_state=0,shuffle=True)
 print(x_tr.shape)
 print(x_val.shape)
 print(y_tr.shape)
@@ -279,9 +277,9 @@ with open('ytokenizer_bi.pickle', 'wb') as handle:
 # bidirectional
 encoder_inputs = Input(shape=(MAX_TEXT_LEN,))
 #embedding layer
-enc_emb =  Embedding(x_voc,embedding_dim,trainable=True)(encoder_inputs)
+enc_emb =  Embedding(x_voc,EMBEDDING_DIM,trainable=True)(encoder_inputs)
 #encoder lstm 
-encoder_lstm = Bidirectional(LSTM(latent_dim,return_sequences=True,return_state=True))
+encoder_lstm = Bidirectional(LSTM(LATENT_DIM,return_sequences=True,return_state=True))
 encoder_outputs, fw_state_h, fw_state_c, bw_state_h, bw_state_c = encoder_lstm(enc_emb)
 
 state_h = Concatenate()([fw_state_h, bw_state_h])
@@ -294,10 +292,10 @@ encoder_states = [state_h, state_c]
 decoder_inputs = Input(shape=(None,))
 
 #embedding layer
-dec_emb_layer = Embedding(y_voc, embedding_dim,trainable=True)
+dec_emb_layer = Embedding(y_voc, EMBEDDING_DIM,trainable=True)
 dec_emb = dec_emb_layer(decoder_inputs)
 
-decoder_lstm = LSTM(latent_dim*2, return_sequences=True, return_state=True)
+decoder_lstm = LSTM(LATENT_DIM*2, return_sequences=True, return_state=True)
 decoder_outputs,decoder_fwd_state, decoder_back_state = decoder_lstm(dec_emb,initial_state=encoder_states)
                                                           
 #dense layer
@@ -359,9 +357,9 @@ encoder_model = Model(inputs=encoder_inputs,outputs=[encoder_outputs, state_h, s
 
 # Decoder setup
 # Below tensors will hold the states of the previous time step
-decoder_state_input_h = Input(shape=(latent_dim*2,))
-decoder_state_input_c = Input(shape=(latent_dim*2,))
-decoder_hidden_state_input = Input(shape=(MAX_TEXT_LEN,latent_dim*2))
+decoder_state_input_h = Input(shape=(LATENT_DIM*2,))
+decoder_state_input_c = Input(shape=(LATENT_DIM*2,))
+decoder_hidden_state_input = Input(shape=(MAX_TEXT_LEN,LATENT_DIM*2))
 decoder_state_inputs = [decoder_state_input_h, decoder_state_input_c]
 
 # Get the embeddings of the decoder sequence
@@ -497,58 +495,58 @@ Using ROUGE (Recall-Orientated Understanding Gisting Evaluation) to evaluate the
 #     else : 
 #       return num_overlapping_words / generated_summary_len
 
-"""### For Training Data"""
+# """### For Training Data"""
 
-print(len(x_tr))
+# print(len(x_tr))
 
-tr_target_summary = []
-tr_generated_summary = []
-x_tr_len = len(x_tr)
+# tr_target_summary = []
+# tr_generated_summary = []
+# x_tr_len = len(x_tr)
 
-f_ov = 0
-p_ov = 0
-r_ov = 0
-# x_val_len = 1
-for i in range(0,x_tr_len):
-  original = seq2summary(y_tr[i])
-  tr_target_summary.append(original)
-  x_i = x_tr[i].reshape(1,MAX_TEXT_LEN)
-  summary = decode_sequence(x_i)
-  tr_generated_summary.append(summary)
-  score = getRouge(str(summary), str(original))
-  f_ov += float(score[0].get('rouge-1').get('f'))
-  p_ov += float(score[0].get('rouge-1').get('p'))
-  r_ov += float(score[0].get('rouge-1').get('r'))
+# f_ov = 0
+# p_ov = 0
+# r_ov = 0
+# # x_val_len = 1
+# for i in range(0,x_tr_len):
+#   original = seq2summary(y_tr[i])
+#   tr_target_summary.append(original)
+#   x_i = x_tr[i].reshape(1,MAX_TEXT_LEN)
+#   summary = decode_sequence(x_i)
+#   tr_generated_summary.append(summary)
+#   score = getRouge(str(summary), str(original))
+#   f_ov += float(score[0].get('rouge-1').get('f'))
+#   p_ov += float(score[0].get('rouge-1').get('p'))
+#   r_ov += float(score[0].get('rouge-1').get('r'))
 
-# print("precision : " + str(precision(tr_target_summary, tr_generated_summary)))
-print("Avg F Score: " + str(f_ov/x_tr_len))
-print("Avg Precision: " + str(p_ov/x_tr_len))
-print("Avg Recall: " + str(r_ov/x_tr_len))
+# # print("precision : " + str(precision(tr_target_summary, tr_generated_summary)))
+# print("Avg F Score: " + str(f_ov/x_tr_len))
+# print("Avg Precision: " + str(p_ov/x_tr_len))
+# print("Avg Recall: " + str(r_ov/x_tr_len))
 
-"""### For Validation Data"""
+# """### For Validation Data"""
 
-val_target_summary = []
-val_generated_summary = []
-x_val_len = len(x_val)
-f_ov = 0
-p_ov = 0
-r_ov = 0
+# val_target_summary = []
+# val_generated_summary = []
+# x_val_len = len(x_val)
+# f_ov = 0
+# p_ov = 0
+# r_ov = 0
 
-for i in range(0,x_val_len):
-  original = seq2summary(y_val[i])
-  val_target_summary.append(original)
-  x_i = x_val[i].reshape(1,MAX_TEXT_LEN)
-  summary = decode_sequence(x_i)
-  val_generated_summary.append(summary)
-  score = getRouge(str(summary), str(original))
-  f_ov += float(score[0].get('rouge-1').get('f'))
-  p_ov += float(score[0].get('rouge-1').get('p'))
-  r_ov += float(score[0].get('rouge-1').get('r'))
+# for i in range(0,x_val_len):
+#   original = seq2summary(y_val[i])
+#   val_target_summary.append(original)
+#   x_i = x_val[i].reshape(1,MAX_TEXT_LEN)
+#   summary = decode_sequence(x_i)
+#   val_generated_summary.append(summary)
+#   score = getRouge(str(summary), str(original))
+#   f_ov += float(score[0].get('rouge-1').get('f'))
+#   p_ov += float(score[0].get('rouge-1').get('p'))
+#   r_ov += float(score[0].get('rouge-1').get('r'))
 
-# print("precision : " + str(precision(val_target_summary, val_generated_summary)))
-print("Avg F Score: " + str(f_ov/x_val_len))
-print("Avg Precision: " + str(p_ov/x_val_len))
-print("Avg Recall: " + str(r_ov/x_val_len))
+# # print("precision : " + str(precision(val_target_summary, val_generated_summary)))
+# print("Avg F Score: " + str(f_ov/x_val_len))
+# print("Avg Precision: " + str(p_ov/x_val_len))
+# print("Avg Recall: " + str(r_ov/x_val_len))
 
 # """# Inputting New Data"""
 

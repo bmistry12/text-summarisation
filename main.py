@@ -5,6 +5,7 @@ import dataProcessing as process
 
 def main():
     output_csv = "test.csv"
+    textRank = True
     try:
         path = sys.argv[1]
         print(path)
@@ -16,13 +17,13 @@ def main():
         if (os.path.isdir(path)):
             readwrite = process.Read_Write_Data(path)
             print("read in files")
-            readwrite.read_in_files(10000)
+            readwrite.read_in_files(1)
             print("done reading files")
             data = readwrite.get_df()
             print (data.head())
             cleaner = process.Clean_Data(data)
             print("clean data")
-            cleaner.clean_data()
+            cleaner.clean_data(textRank)
             print("done cleaning data")
             print("remove stop words")
             cleaner.remove_stop_words()
@@ -30,11 +31,14 @@ def main():
             print("lemmatize")
             cleaner.lemmatization(True)
             print("done lemmatizing")
-            data = readwrite.get_df()
-            print(readwrite.get_df())
-            print("output to csv")
-            readwrite.df_to_csv(output_csv)
-            print("done all")
+            if textRank:
+                textrank = process.TextRank(readwrite.get_df())
+                textrank.rankSummmaries()
+            # data = readwrite.get_df()
+            # print(readwrite.get_df())
+            # print("output to csv")
+            # readwrite.df_to_csv(output_csv)
+            # print("done all")
         else :
             print(path + " is not a valid directory")
     except Exception as e:

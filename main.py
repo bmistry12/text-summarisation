@@ -17,7 +17,7 @@ def main():
         if (os.path.isdir(path)):
             readwrite = process.Read_Write_Data(path)
             print("read in files")
-            readwrite.read_in_files(1)
+            readwrite.read_in_files(2)
             print("done reading files")
             data = readwrite.get_df()
             print (data.head())
@@ -33,12 +33,12 @@ def main():
             print("done lemmatizing")
             if textRank:
                 textrank = process.TextRank(readwrite.get_df())
-                textrank.rankSummmaries()
-            # data = readwrite.get_df()
-            # print(readwrite.get_df())
-            # print("output to csv")
-            # readwrite.df_to_csv(output_csv)
-            # print("done all")
+                textrank.main()
+            data = readwrite.get_df()
+            print(readwrite.get_df())
+            print("output to csv")
+            readwrite.df_to_csv(output_csv)
+            print("done all")
         else :
             print(path + " is not a valid directory")
     except Exception as e:

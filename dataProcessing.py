@@ -112,19 +112,30 @@ class Clean_Data():
 		
 
 class TextRank():
+	"""
+	Run TextRank on the data to ensure model is run against the most important texts and summaries
+	"""
 	def __init__(self, df):
 		self.df = df
 	
-	def rankSummmaries(self):
-		# sentences
-		summary = self.df['summary'][0]
+	def main(self):
+		text = self.df['text']
+		summaries = self.df['summary']
+		# update summaries
+		new_summaries = [self.rankSummmaries(summary) for summary in summaries]
+		self.df['summary'] = new_summaries
+
+	def rankSummmaries(self, summary):
+		"""
+		Rank summaries and return the one with the highest score
+		"""
 		summary_split = summary.split("@ highlight")
 		print(summary_split)
 
 		embedding_index = self.getWordEmbeddings()
 		sentence_vectors  = []
 		# get word count vector for each sentence
-		for i, sentence in enumerate(summary_split):
+		for sentence in summary_split:
 			words = nltk.word_tokenize(sentence)
 			mean_vector_score = sum([embedding_index.get(word, np.zeros((100,))) for word in words])/len(words)
 			sentence_vectors.append(mean_vector_score)
@@ -135,9 +146,9 @@ class TextRank():
 		pageRank_scores = self.getGraph(sim_matrix) 
 		# rank sentences based off scores and extract top one as the chosen sentence for training
 		sent_scores = [(pageRank_scores[i], sent) for i, sent in enumerate(summary_split)]
-		print(sent_scores)
-		# ranked_sentences = sorted(((scores[i],s) for i,s in enumerate(sentences)), reverse=True)
-
+		sent_scores = sorted(sent_scores, reverse=True)
+		chosen_summary = sent_scores[0][1]
+		return(chosen_summary)
 
 	def getSimilarityMatrix(self, sentence_vectors):
 		sim_matrix = np.zeros([len(sentence_vectors), len(sentence_vectors)])
@@ -169,6 +180,3 @@ class TextRank():
 				coefs = np.asarray(values[1:], dtype='float32')
 				embedding_index[word] = coefs
 		return embedding_index
-
-		# article = "Editors note In Behind Scenes series CNN correspondent share experience cover news analyze story behind event Here Soledad OBrien take user inside jail many inmate mentally ill An inmate house forgotten floor many mentally ill inmate house Miami trial MIAMI Florida The ninth floor MiamiDade pretrial detention facility dubbed forgotten floor Here inmate severe mental illness incarcerate theyre ready appear court Most often face drug charge charge assault officer charge Judge Steven Leifman say usually avoidable felony He say arrest often result confrontation police Mentally ill people often wont theyre told police arrive scene confrontation seem exacerbate illness become paranoid delusional less likely follow direction accord Leifman So end ninth floor severely mentally disturbed get real help theyre jail We tour jail Leifman He well know Miami advocate justice mentally ill Even though exactly welcome open arm guard give permission shoot videotape tour floor Go inside forgotten floor At first hard determine people The prisoner wear sleeveless robe Imagine cut hole arm foot heavy wool sleep bag thats kind look like Theyre design keep mentally ill patient injure Thats also shoe lace mattress Leifman say onethird people MiamiDade county jail mentally ill So say sheer volume overwhelm system result see ninth floor Of course jail suppose warm comfort light glare cell tiny loud We see two sometimes three men sometimes robe sometimes naked lie sit cell I son president You need get one man shout He absolutely serious convince help way could reach White House Leifman tell prisonerpatients often circulate system occasionally stabilize mental hospital return jail face charge Its brutally unjust mind become strong advocate change thing Miami Over meal later talk thing get way mental patient Leifman say 200 year ago people consider lunatic lock jail even charge They consider unfit society Over year say public outcry mentally ill move jail hospital But Leifman say many mental hospital horrible shut Where patient go Nowhere The street They become many case homeless say They never get treatment Leifman say 1955 half million people state mental hospital today number reduce 90 percent 40000 50000 people mental hospital The judge say he work change Starting 2008 many inmate would otherwise brought forgotten floor instead sent new mental health facility first step journey toward longterm treatment punishment Leifman say complete answer start Leifman say best part winwin solution The patient win family relieve state save money simply cycling prisoner And Leifman justice serve Email friend"
-	

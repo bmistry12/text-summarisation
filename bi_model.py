@@ -136,13 +136,13 @@ x, y = zip(*sorted_dict)
 # only accept words that occur more than 100 times
 accept_words = []
 for word, occ in sorted_dict:
-  if int(occ) < UNCOMMON_WORD_THRESHOLD:
+  if int(occ) > UNCOMMON_WORD_THRESHOLD:
     accept_words.append(word)
   else:
     break
      
 #remove first three comon words
-accept_words.remove(list(x[:3]))
+# accept_words.remove(list(x[:3]))
 accept_words = [x.lower() for x in accept_words]
 print(accept_words)
 print(df['text'][2])
@@ -180,13 +180,13 @@ x, y = zip(*sorted_dict)
 # only accept words that occur more than 100 times
 accept_words = []
 for word, occ in sorted_dict:
-  if int(occ) < UNCOMMON_WORD_THRESHOLD:
+  if int(occ) > UNCOMMON_WORD_THRESHOLD:
     accept_words.append(word)
   else:
     break
      
 #remove first three comon words
-accept_words.remove(list(x[:3]))
+# accept_words.remove(list(x[:3]))
 accept_words = [x.lower() for x in accept_words]
 print(accept_words)
 print(df['summary'][2])

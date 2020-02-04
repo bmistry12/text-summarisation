@@ -33,15 +33,16 @@ from rouge import Rouge
 BATCH_SIZE=30
 EPOCHS=50
 LATENT_DIM=128
-EMBEDDING_DIM=256
+EMBEDDING_DIM=128
 TEST_TRAIN_SPLIT=0.15
 LEARNING_RATE=0.0001
 PATH=""
-FILE_NAME="originals-l.csv"
+FILE_NAME="all.csv"
 MAX_TEXT_LEN = 20
 MAX_SUMMARY_LEN = 10
+UNCOMMON_WORD_THRESHOLD = 100
 # system booleans
-COLAB=True # true if running on colab
+COLAB=False # true if running on colab
 build_number="1"
 
 # create rouge object for evaluation
@@ -115,51 +116,95 @@ plt.ylabel('Documents')
 plt.xlabel('Word Count')
 plt.savefig('word_count_distro_model' + str(build_number) + '.png')
 
-# Finding common words and removing them
-word_dict = {}
+# Finding common and uncommon words and removing them
+## Text
+x_word_dict = {}
 text = df['text'].apply(lambda x: nltk.word_tokenize(x))
 
 for index, row in text.iteritems():
   for word in row:
-    if word not in word_dict.keys():
-      word_dict[word] = 1
+    if word not in x_word_dict.keys():
+      x_word_dict[word] = 1
     else:
-      word_dict[word] += 1
+      x_word_dict[word] += 1
 
-print(len(word_dict))
-sorted_dict = sorted(word_dict.items(), key=lambda x: x[1], reverse=True)
+print(len(x_word_dict))
+sorted_dict = sorted(x_word_dict.items(), key=lambda x: x[1], reverse=True)
 print(sorted_dict)
 x, y = zip(*sorted_dict)
 
-accept_words = list(x[3:])
+# only accept words that occur more than 100 times
+accept_words = []
+for word, occ in sorted_dict:
+  if int(occ) < UNCOMMON_WORD_THRESHOLD:
+    accept_words.append(word)
+  else:
+    break
+     
+#remove first three comon words
+accept_words.remove(list(x[:3]))
 accept_words = [x.lower() for x in accept_words]
 print(accept_words)
 print(df['text'][2])
 df['text'] = df['text'].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: " ".join([word for word in x if word.lower() in accept_words]))
 print(df['text'][2])
 
-word_dict = {}
-text = df['summary'].apply(lambda x: nltk.word_tokenize(x))
+x_word_dict_after = {}
+text = df['text'].apply(lambda x: nltk.word_tokenize(x))
 
 for index, row in text.iteritems():
   for word in row:
-    if word not in word_dict.keys():
-      word_dict[word] = 1
+    if word not in x_word_dict_after.keys():
+      x_word_dict_after[word] = 1
     else:
-      word_dict[word] += 1
+      x_word_dict_after[word] += 1
 
-print(len(word_dict))
-sorted_dict = sorted(word_dict.items(), key=lambda x: x[1], reverse=True)
+print(len(x_word_dict_after))
+
+## Summaries
+y_word_dict = {}
+summary = df['summary'].apply(lambda x: nltk.word_tokenize(x))
+
+for index, row in summary.iteritems():
+  for word in row:
+    if word not in y_word_dict.keys():
+      y_word_dict[word] = 1
+    else:
+      y_word_dict[word] += 1
+
+print(len(y_word_dict))
+sorted_dict = sorted(y_word_dict.items(), key=lambda x: x[1], reverse=True)
 print(sorted_dict)
 x, y = zip(*sorted_dict)
 
-accept_words = list(x[3:])
+# only accept words that occur more than 100 times
+accept_words = []
+for word, occ in sorted_dict:
+  if int(occ) < UNCOMMON_WORD_THRESHOLD:
+    accept_words.append(word)
+  else:
+    break
+     
+#remove first three comon words
+accept_words.remove(list(x[:3]))
 accept_words = [x.lower() for x in accept_words]
 print(accept_words)
 print(df['summary'][2])
 df['summary'] = df['summary'].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: " ".join([word for word in x if word.lower() in accept_words]))
 print(df['summary'][2])
 
+y_word_dict_after = {}
+summary = df['summary'].apply(lambda x: nltk.word_tokenize(x))
+
+for index, row in summary.iteritems():
+  for word in row:
+    if word not in y_word_dict_after.keys():
+      y_word_dict_after[word] = 1
+    else:
+      y_word_dict_after[word] += 1
+print(len(y_word_dict_after))
+
+# Max lengths after removal of words
 text_word_count = []
 summary_word_count = []
 
@@ -318,7 +363,9 @@ model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy')
 """
 
 es = EarlyStopping(monitor='val_loss', mode='min', verbose=1,patience=2, restore_best_weights=False)
-filepath = "./drive/My Drive/project-model/saved-model-{epoch:02d}.hdf5"
+filepath = "./model/saved-model-{epoch:02d}.hdf5"
+if COLAB:
+  filepath = "./drive/My Drive/project-model/saved-model-{epoch:02d}.hdf5"
 mc = ModelCheckpoint(filepath, monitor='val_loss', verbose=0, save_best_only=False, save_weights_only=False, mode='auto', period=1)
 
 """#### Use this method to train a new model. To continue training a previously trained model see below"""
@@ -436,7 +483,7 @@ Note: *I think there isn't enough data being passed in and so the argmax value a
 def getRouge(gt, pred):
   return rouge.get_scores(pred, gt)
 
-for i in range(0,5):
+for i in range(0,1):
     print("Article:",seq2text(x_tr[i]))
     original = seq2summary(y_tr[i])
     print("Original summary:",original)

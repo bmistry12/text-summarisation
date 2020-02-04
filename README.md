@@ -65,7 +65,7 @@ End Of Semester 1                       :         des1, 2019-12-13, 1d
 section Project Semester 2
 Start of Semester 2                     :         des1, 2020-01-13, 1d
 Experimenting with WordEmbeddings       :done,    des1, 2020-01-15, 2020-01-22
-Experimenting with TextRank             :         des1, 2020-01-22, 2020-01-26
+Experimenting with TextRank             :active,    des1, 2020-01-22, 2020-01-26
 Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
 Ontology Based Classification           :         des1, 2020-02-02, 2020-02-13
 Adding in some more Extractive methods  :         des1, 2020-02-05, 2020-02-20
@@ -121,7 +121,7 @@ Start of Semester 2                     :         des1, 2020-01-13, 1d
 Experimenting with WordEmbeddings       :done,    des1, 2020-01-13, 2020-01-26
 K-Folds Cross Validation Algorithm      :         des1, 2020-01-13, 2020-01-16
 Ontology Based Classification           :         des1, 2020-01-16, 2020-01-20
-Experimenting with TextRank             :         des1, 2020-01-22, 2020-01-26
+Experimenting with TextRank             :active,  des1, 2020-02-02, 2020-02-03
 Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
 Adding in some more Extractive methods  :         des1, 2020-02-05, 2020-02-20
 Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19

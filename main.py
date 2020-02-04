@@ -34,11 +34,11 @@ def main():
             if textRank:
                 textrank = process.TextRank(readwrite.get_df())
                 textrank.main()
-            data = readwrite.get_df()
-            print(readwrite.get_df())
-            print("output to csv")
-            readwrite.df_to_csv(output_csv)
-            print("done all")
+            # data = readwrite.get_df()
+            # print(readwrite.get_df())
+            # print("output to csv")
+            # readwrite.df_to_csv(output_csv)
+            # print("done all")
         else :
             print(path + " is not a valid directory")
     except Exception as e:

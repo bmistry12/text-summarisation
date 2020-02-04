@@ -52,6 +52,7 @@ class Clean_Data():
 	def clean_data(self, textRank):
 		self.df.drop_duplicates(subset=['file'],inplace=True)  #dropping duplicates
 		self.df.dropna(axis=0,inplace=True)   #dropping na
+		# clean texts
 		self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|[^\w\s\.]','',x)).apply(lambda x: re.sub(r'(\.(?=[\s\r\n]|$))','',x)).apply(lambda x: re.sub(r'\n',' ',x)).apply(lambda x: re.sub(r'\.','',x))
 		# separate the summaries using a '.' 
 		if textRank :	
@@ -119,11 +120,14 @@ class TextRank():
 		self.df = df
 	
 	def main(self):
-		text = self.df['text']
+		# text = self.df['text']
 		summaries = self.df['summary']
 		# update summaries
 		new_summaries = [self.rankSummmaries(summary) for summary in summaries]
 		self.df['summary'] = new_summaries
+
+	def rankTexts(self, text):
+		pass
 
 	def rankSummmaries(self, summary):
 		"""

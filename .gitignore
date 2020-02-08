@@ -15,6 +15,7 @@ functions.cpython*
 *.csv
 /model
 /data
+/glove
 
 ### Notes ###
 NOTES*

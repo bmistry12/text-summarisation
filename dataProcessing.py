@@ -114,7 +114,7 @@ class Clean_Data():
 
 class TextRank():
 	"""
-	Run TextRank on the data to ensure model is run against the most important texts and summaries
+	Run TextRank on the data to ensure model is run against the most important summaries
 	"""
 	def __init__(self, df):
 		self.df = df
@@ -123,20 +123,17 @@ class TextRank():
 		# text = self.df['text']
 		summaries = self.df['summary']
 		# update summaries
-		new_summaries = [self.rankSummmaries(summary) for summary in summaries]
+		new_summaries = [self.rank_summaries(summary) for summary in summaries]
 		self.df['summary'] = new_summaries
 
-	def rankTexts(self, text):
-		pass
-
-	def rankSummmaries(self, summary):
+	def rank_summaries(self, summary):
 		"""
 		Rank summaries and return the one with the highest score
 		"""
 		summary_split = summary.split("@ highlight")
 		print(summary_split)
 
-		embedding_index = self.getWordEmbeddings()
+		embedding_index = self.get_word_embeddings()
 		sentence_vectors  = []
 		# get word count vector for each sentence
 		for sentence in summary_split:
@@ -145,16 +142,16 @@ class TextRank():
 			sentence_vectors.append(mean_vector_score)
 		
 		# similarity matrix
-		sim_matrix = self.getSimilarityMatrix(sentence_vectors)
+		sim_matrix = self.get_similarity_matrix(sentence_vectors)
 		#graph of matrix - retrieve a set of scores based on page rank algorithm
-		pageRank_scores = self.getGraph(sim_matrix) 
+		pageRank_scores = self.get_graph(sim_matrix) 
 		# rank sentences based off scores and extract top one as the chosen sentence for training
 		sent_scores = [(pageRank_scores[i], sent) for i, sent in enumerate(summary_split)]
 		sent_scores = sorted(sent_scores, reverse=True)
 		chosen_summary = sent_scores[0][1]
 		return(chosen_summary)
 
-	def getSimilarityMatrix(self, sentence_vectors):
+	def get_similarity_matrix(self, sentence_vectors):
 		sim_matrix = np.zeros([len(sentence_vectors), len(sentence_vectors)])
 		# CSim(d1,d2) = cos(x) - use cosine similarity
 		for i, d1 in enumerate(sentence_vectors):
@@ -165,14 +162,14 @@ class TextRank():
 		print(sim_matrix)
 		return sim_matrix
 
-	def getGraph(self, sim_matrix):
+	def get_graph(self, sim_matrix):
 		nx_graph = nx.from_numpy_array(sim_matrix)
 		print(nx_graph)
 		scores = nx.pagerank(nx_graph)
 		print(scores)
 		return scores
 	
-	def getWordEmbeddings(self):
+	def get_word_embeddings(self):
 		"""
 		Get GloVe Word Embeddings 
 		"""
@@ -184,3 +181,36 @@ class TextRank():
 				coefs = np.asarray(values[1:], dtype='float32')
 				embedding_index[word] = coefs
 		return embedding_index
+
+class WordFrequency():
+	"""
+	Run WordFrequencey on the data to ensure model is run against the most important texts and summaries
+	"""
+	def __init__(self, df):
+		self.df = df
+	
+	def main(self):
+		text = self.df['text']
+		summaries = self.df['summary']
+		# update summaries
+		new_summaries = [self.word_frequency(summary) for summary in summaries]
+		self.df['summary'] = new_summaries
+
+	def word_frequency(self, document):
+		word_count = {}
+		words = nltk.word_tokenize(document)
+		for word in words:
+			if word in word_count:
+				word_count[word] = word_count.get(word) + 1
+			else:
+				word_count[word] = 1
+
+class SentencePosition():
+	"""
+	Run WordFrequencey on the data to ensure model is run against the most important texts
+	"""
+	def __init__(self, df):
+		self.df = df
+
+
+		

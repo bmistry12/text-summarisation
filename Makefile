@@ -1,8 +1,8 @@
 # This Makefile allows you to process data
 
 # Change by passing in TRAIN_DATA_PATH=<> / OUTPUT_CSV=<> via make command
-TRAIN_DATA_PATH="./cnn/originals"
-OUTPUT_CSV="./data/fake.csv"
+TRAIN_DATA_PATH="./dailymail/originals"
+OUTPUT_CSV="./data/dailymail-nodp.csv"
 
 requirements:
 	pip install -r requirements.txt --user

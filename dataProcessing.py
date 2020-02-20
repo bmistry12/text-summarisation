@@ -190,7 +190,7 @@ class WordFrequency():
 		self.df = df
 	
 	def main(self):
-		text = self.df['text']
+		# text = self.df['text']
 		summaries = self.df['summary']
 		# update summaries
 		new_summaries = [self.word_frequency(summary) for summary in summaries]

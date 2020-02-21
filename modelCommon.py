@@ -79,7 +79,7 @@ class Common():
         print(self.df['summary'][0])
         self.word_count_distribution(self.df['text'], self.df['summary'], "cutdown")
         # if we're removing uncommon words call the infrequent_word_removal method
-        if word_removal:
+        if "word_removal" == "True":
             self.df['text'] = self.infrequent_word_removal(self.df['text'])
             self.df['summary'] = self.infrequent_word_removal(self.df['summary'])
             self.word_count_distribution(self.df['text'], self.df['summary'], "word_removal")

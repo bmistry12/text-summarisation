@@ -30,15 +30,15 @@ def data_processing():
                 print("clean data")
                 cleaner.clean_data(textRank)
                 print("done cleaning data")
-                if stopWords:
+                if stopWords == "True":
                     print("remove stop words")
                     cleaner.remove_stop_words()
                     print("done removing stop words")
-                if lemmatize:
+                if lemmatize == "True":
                     print("lemmatize")
                     cleaner.lemmatization(lemmatize_with_pos)
                     print("done lemmatizing")
-                if textRank:
+                if textRank == "True":
                     print("run text rank")
                     textrank = process.TextRank(readwrite.get_df())
                     textrank.main()
@@ -60,13 +60,13 @@ def model():
         model_id = sys.argv[2] 
         word_removal = sys.argv[3] # uncommon word removal boolean
         print(model_id)
-        if model_id==0:
+        if model_id == "0":
             # unidirectional model
             unimodel = models.UniModel(word_removal)
-        elif model_id==1:
+        elif model_id == "1":
             # bidirectional model
             bimodel = models.BiModel(word_removal)
-        elif model_id==2:
+        elif model_id == "2":
             # glove model
             glovemodel = models.GloveModel(word_removal)
         else:
@@ -86,9 +86,9 @@ if __name__ == "__main__":
     """
     try:
         data_or_model = sys.argv[1]
-        if data_or_model == 0:
+        if data_or_model == "0":
             data_processing()
-        elif data_or_model == 1:
+        elif data_or_model == "1":
             model()
         else:
             raise Exception("This is not a valid mode - use 0 for data procesing and 1 for running a model")

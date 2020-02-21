@@ -91,7 +91,7 @@ class Clean_Data():
 		# Should we not also lemmatize summaries?
 		lemmatizer = WordNetLemmatizer()
 		text_tokenized = self.df['text'].apply(lambda x: nltk.word_tokenize(x))
-		if pos:
+		if pos == "True":
 			print("lemmatize with pos")
 			for i in range(0,len(text_tokenized)):
 				text_lemmatized = []

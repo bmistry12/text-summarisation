@@ -26,9 +26,9 @@ class UniModel():
         self.common.read_and_clean_data()
         self.common.word_processing(word_removal)
         self.df = self.common.get_df()
+        self.x_tr, self.x_val, self.y_tr, self.y_val = self.common.training_validation_split()
         self.X = self.common.get_x()
         self.Y = self.common.get_y()
-        self.x_tr, self.x_val, self.y_tr, self.y_val = self.common.training_validation_split()
         self.word_embeddings()
         # learning model
         model, encoder_inputs, encoder_outputs, state_h, state_c, decoder_inputs, dec_emb_layer, decoder_lstm, decoder_dense = self.learning_model()
@@ -232,10 +232,11 @@ class BiModel():
         # word procesing
         self.common.word_processing(word_removal)
         self.df = self.common.get_df()
-        self.X = self.common.get_x()
-        self.Y = self.common.get_y()
         # test training split
         self.x_tr, self.x_val, self.y_tr, self.y_val = self.common.training_validation_split()
+        # note X and Y are only defined after common.training_validation_split is carried out
+        self.X = self.common.get_x()
+        self.Y = self.common.get_y()
         # word tokenization
         self.word_embeddings()
         # learning model
@@ -470,9 +471,9 @@ class GloveModel():
         self.common.read_and_clean_data()
         self.common.word_processing(word_removal)
         self.df = self.common.get_df()
+        self.x_tr, self.x_val, self.y_tr, self.y_val = self.common.training_validation_split()
         self.X = self.common.get_x()
         self.Y = self.common.get_y()
-        self.x_tr, self.x_val, self.y_tr, self.y_val = self.common.training_validation_split()
         # get emebedding index
         embedding_index = self.glove()
         # create word embeddings using GloVe

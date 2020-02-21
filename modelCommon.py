@@ -28,10 +28,10 @@ class Common():
         self.EMBEDDING_DIM = 256
         self.TEST_TRAIN_SPLIT = 0.15
         self.LEARNING_RATE = 0.0001
-        self.FILE_NAME = "originals-l.csv" # csv data to run model against
+        self.FILE_NAME = "all.csv" # csv data to run model against
         self.MAX_TEXT_LEN = 20
         self.MAX_SUMMARY_LEN = 10
-        self.UNCOMMON_WORD_THRESHOLD = 100
+        self.UNCOMMON_WORD_THRESHOLD = 100 # only matters in UNCOMMON_WORDS is set
         self.COLAB = False  # true if running on colab
         self.build_number = "1"
         self.rouge = Rouge()

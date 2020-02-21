@@ -42,7 +42,7 @@ class Common():
             from google.colab import drive
             drive.mount('/content/drive')
             self.PATH = "./drive/My Drive/"
-        # CSV -> PD DataFrame
+        # CSV to panda DataFrame
         self.df = pd.read_csv(self.PATH + self.FILE_NAME)
         # Head of df
         print(self.df.head())
@@ -63,20 +63,6 @@ class Common():
         self.drop_null_rows()
         # word count distro graph before any word processing
         self.word_count_distribution(self.df['text'], self.df['summary'], "precutdown")
-
-    def drop_null_rows(self):
-        """Check for rows with null values in them, and copy these into a new dataframe (df1). 
-        Drop any rows in df1 from df to ensure no NaN valued rows are present/
-        *Note. using simply dropna(how='any') does not seem to drop any of the rows*"""
-        print(self.df.isnull().values.any())
-        print(self.df.shape)
-
-        df1 = self.df[self.df.isna().any(axis=1)]
-        print(df1.shape)
-
-        self.df.drop(df1.index, axis=0, inplace=True)
-        print(self.df.shape)
-        print(self.df.isnull().values.any())
 
     def word_processing(self, word_removal):
         """
@@ -108,6 +94,20 @@ class Common():
         # add in start and end tokens to summaries
         self.df['summary'] = self.df['summary'].apply(lambda x: 'sostok ' + x + ' eostok')
         print(self.df['summary'].head())
+
+    def drop_null_rows(self):
+        """Check for rows with null values in them, and copy these into a new dataframe (df1). 
+        Drop any rows in df1 from df to ensure no NaN valued rows are present/
+        *Note. using simply dropna(how='any') does not seem to drop any of the rows*"""
+        print(self.df.isnull().values.any())
+        print(self.df.shape)
+
+        df1 = self.df[self.df.isna().any(axis=1)]
+        print(df1.shape)
+
+        self.df.drop(df1.index, axis=0, inplace=True)
+        print(self.df.shape)
+        print(self.df.isnull().values.any())
 
     def infrequent_word_removal(self, dataframe):
         """
@@ -215,7 +215,7 @@ class Common():
         else:
             for i in input_seq:
                 if((i!=0 and i!=target_word_index['sostok']) and i!=target_word_index['eostok']):
-                    newString=newString+reverse_word_index[i]+' '
+                    textString = textString + ' ' + reverse_word_index[i]
         return textString
 
     # def decode_sequence(self, input_seq, encoder_model, decoder_model, reverse_target_word_index, y_voc): 
@@ -292,7 +292,7 @@ class Common():
         r_ov = 0
         # x_val_len = 1
         for i in range(0,x_len):
-            original = self.seq_to_text(y[i], reverse_target_word_index, target_word_index, False)
+            original = self.seq_to_text(y[i], reverse_target_word_index, target_word_index, True)
             if original != "" :
                 target_summary.append(original)
                 x_i = x[i].reshape(1,self.MAX_TEXT_LEN)

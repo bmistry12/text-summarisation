@@ -347,7 +347,9 @@ class BiModel():
         # Final Decoder model
         decoder_model = Model([decoder_inputs] + [decoder_hidden_state_input, decoder_state_input_h, decoder_state_input_c], [decoder_outputs2] + decoder_states)
         print(decoder_model.summary())
-
+        # save encoder and decoder
+        encoder_model.save(self.common.PATH + "encoder_model.h5")
+        decoder_model.save(self.common.PATH + "decoder_model.h5")
         return encoder_model, decoder_model
 
     def word_embeddings(self):

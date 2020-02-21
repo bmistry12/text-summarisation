@@ -613,7 +613,7 @@ class GloveModel():
             Load Glove Embeddings
         """
         embedding_index = {}
-        glove_path = self.common.PATH + "glove/glove.6b."
+        glove_path = self.common.PATH + "glove/glove.6B."
         with open(glove_path + str(self.common.EMBEDDING_DIM) + 'd.txt') as f:
             for line in f:
                 values = line.split()

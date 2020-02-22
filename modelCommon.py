@@ -22,15 +22,15 @@ class Common():
     def __init__(self):
         # Set Hyperparameters
         self.PATH = ""
-        self.BATCH_SIZE = 30
+        self.BATCH_SIZE = 40
         self.EPOCHS = 50
-        self.LATENT_DIM = 128
-        self.EMBEDDING_DIM = 256
+        self.LATENT_DIM = 256
+        self.EMBEDDING_DIM = 128
         self.TEST_TRAIN_SPLIT = 0.15
-        self.LEARNING_RATE = 0.0001
+        self.LEARNING_RATE = 0.005
         self.FILE_NAME = "all.csv" # csv data to run model against
-        self.MAX_TEXT_LEN = 20
-        self.MAX_SUMMARY_LEN = 10
+        self.MAX_TEXT_LEN = 100
+        self.MAX_SUMMARY_LEN = 20
         self.UNCOMMON_WORD_THRESHOLD = 100 # only matters in UNCOMMON_WORDS is set
         self.COLAB = False  # true if running on colab
         self.build_number = "1"

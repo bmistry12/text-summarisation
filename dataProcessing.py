@@ -54,7 +54,7 @@ class Clean_Data():
     def __init__(self, dataframe):
         self.df = dataframe
 
-    def clean_data(self, textRank):
+    def clean_data(self, textRank, wordFreq):
         # dropping duplicates
         self.df.drop_duplicates(subset=['file'], inplace=True)
         self.df.dropna(axis=0, inplace=True)  # dropping na
@@ -62,7 +62,7 @@ class Clean_Data():
         self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|[^\w\s\.]', '', x)).apply(lambda x: re.sub(
             r'(\.(?=[\s\r\n]|$))', '', x)).apply(lambda x: re.sub(r'\n', ' ', x)).apply(lambda x: re.sub(r'\.', '', x))
         # separate the summaries using a '.'
-        if textRank:
+        if textRank or wordFreq:
             self.df['summary'] = self.df['summary'].apply(
                 lambda x: re.sub(r'\n|[^\w\s\.\@]', '', x))
         else:
@@ -205,23 +205,48 @@ class WordFrequency():
 	Run WordFrequencey on the data to ensure model is run against the most important texts and summaries
 	"""
 	def __init__(self, df):
-		print("INIT")
 		self.df = df
 		self.main()
 
 	def main(self):
-		print("HERE")
-        # text = self.df['text']
+		texts = self.df['text']
 		summaries = self.df['summary']
-        # update summaries
-		sentence_scores = [self.score_sentences(summary) for summary in summaries]
-		print("SENT SCORES")
+        # get sentence scores for each summary
+		self.test = 0 # this is a hack for getting the correct article for each summary
+		sentence_scores = [self.score_sentences(summary, texts) for summary in summaries]
+		print("Sentence Scores")
 		print(sentence_scores)
         # sentence scores = [("sentence1", value1) ... ("sentecex", valuex)]
 		self.df['summary'] = [self.get_best_summary(sentences) for sentences in sentence_scores]
-		
+
+	def score_sentences(self, document, texts):
+		"""
+			Score each summary based on the number of words that occurs in them that also occur in the highest occuring words in the main document text
+		"""
+		sent_scores = []
+		# call word_frequency to get a word frequency table (or rather list of words) from the respective article
+		scorable_words = self.word_frequency(texts[self.test])
+		# split the summaries by @highlight token
+		summary_split = document.split("@ highlight")
+		sentenceValue = 0
+		sent_len = 0
+		# for each summary calculate the sentence value
+		for summary in summary_split:
+			words = nltk.word_tokenize(summary)
+			sent_len = len(words)
+			for word in words:
+				if word in scorable_words:
+					sentenceValue =+ 1
+			# normalise sentence value based on sentence length so that longer sentences do not get an automatic advantage over shorter ones
+			sentenceValue = sentenceValue / sent_len
+			sent_scores.append((summary, sentenceValue))
+		return sent_scores
+
 	def word_frequency(self, document):
-		print("word freq tabling")
+		"""
+			Calculate a word frequency table for the words in a given documents
+			After this, it removes any words that occur below a given threshold value, returning a list of "acceptable" words from the original corpus
+		"""
 		freq_table = {}
 		words = nltk.word_tokenize(document)
 		for word in words:
@@ -231,55 +256,26 @@ class WordFrequency():
 				freq_table[word] = 1
 		# cut down the frequency table so that only common words are scored for
 		freq_table = sorted(freq_table.items(), key=lambda x: x[1], reverse=True)
-		print(freq_table)
 		scorable_words = []
 		for word, occ in freq_table:
-			# set threshold as words appearing two times or more
+			# set threshold as words appearing 0 times or more
 			if int(occ) > 0:
 				scorable_words.append(word)
 			else:
 				break
-		print("scorable words")
-		print(scorable_words)
+		self.test = self.test + 1 # increment hack variable
 		return scorable_words
 
-	def score_sentences(self, document):
-		sent_scores = []
-		scorable_words = self.word_frequency(document)
-		summary_split = document.split("@highlight")
-		sentenceValue = 0
-		sent_len = 0
-		print("eachsummary")
-		for summary in summary_split:
-			print(summary)
-			words = nltk.word_tokenize(summary)
-			sent_len = len(words)
-			for word in words:
-				if word in scorable_words:
-					sentenceValue =+ 1
-			print(sentenceValue)
-			print(sent_len)
-			sentenceValue = sentenceValue / sent_len
-			print(sentenceValue)
-			print("---")
-			sent_scores.append((summary, sentenceValue))
-		print(sent_scores)
-		return sent_scores
-
 	def get_best_summary(self, sent_scores):
-		print("get best")
-		print(sent_scores)
+		"""
+			Get the best summary based on which has the greatest score
+		"""
 		best_val = 0
 		best_sent = ""
 		for (sentence, val) in sent_scores:
-			print(best_val)
-			print(val)
 			if val > best_val:
 				best_sent = sentence
 				best_val = val
-		print("BET SENTECES")
-		print(best_sent)
-		print(best_val)
 		return best_sent
 
 class SentencePosition():

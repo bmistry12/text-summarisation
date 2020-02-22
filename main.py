@@ -5,6 +5,17 @@ import sys
 import dataProcessing as process
 
 def data_processing():
+    """
+        Main script for all data processing - arguments are taken from command line via main() method
+        Note: you should only have one of arg7 onwards as True.
+        @arg2 = training data path
+        @arg3 = output csv for procesed data
+        @arg4 = remove stop words?
+        @arg5 = lemmatize?
+        @arg6 = lemmatize with part of speech?
+        @arg7 = run text rank?
+        @arg8 = run word freq?
+    """
     output_csv = "default.csv" # default value
     try:
         path = sys.argv[2] 
@@ -16,10 +27,12 @@ def data_processing():
             print("Not output csv specified - using default")
         if (os.path.isdir(path)):
             try: 
-                # stopWords = sys.argv[4]
-                # lemmatize = sys.argv[5]
-                # lemmatize_with_pos = sys.argv[6]
+                # system arguments
+                stopWords = sys.argv[4]
+                lemmatize = sys.argv[5]
+                lemmatize_with_pos = sys.argv[6]
                 textRank = sys.argv[7]
+                wordFreq = sys.argv[8]
                 # run data processing
                 readwrite = process.Read_Write_Data(path)
                 print("read in files")
@@ -28,24 +41,25 @@ def data_processing():
                 data = readwrite.get_df()
                 cleaner = process.Clean_Data(data)
                 print("clean data")
-                cleaner.clean_data(textRank)
+                cleaner.clean_data(textRank, wordFreq)
                 print("done cleaning data")
-                # if stopWords == "True":
-                #     print("remove stop words")
-                #     cleaner.remove_stop_words()
-                #     print("done removing stop words")
-                # if lemmatize == "True":
-                #     print("lemmatize")
-                #     cleaner.lemmatization(lemmatize_with_pos)
-                #     print("done lemmatizing")
-                # if textRank == "True":
-                #     print("run text rank")
-                #     textrank = process.TextRank(readwrite.get_df())
-                #     textrank.main()
-                #     print("text rank applied")
-                print("WORD FREQ")
-                process.WordFrequency(readwrite.get_df())
-                print("DONE")
+                if stopWords == "True":
+                    print("remove stop words")
+                    cleaner.remove_stop_words()
+                    print("done removing stop words")
+                if lemmatize == "True":
+                    print("lemmatize")
+                    cleaner.lemmatization(lemmatize_with_pos)
+                    print("done lemmatizing")
+                if textRank == "True":
+                    print("run text rank")
+                    textrank = process.TextRank(readwrite.get_df())
+                    textrank.main()
+                    print("text rank applied")
+                if wordFreq == "True":
+                    print("run word frequency")
+                    process.WordFrequency(readwrite.get_df())
+                    print("word frequency applied")
                 data = readwrite.get_df()
                 print(readwrite.get_df())
                 # print("output to csv")
@@ -86,6 +100,7 @@ if __name__ == "__main__":
         @arg5 = lemmatize
         @arg6 = lemmatize with part of speech
         @arg7 = run text rank
+        @arg8 = run word frequency
     """
     try:
         data_or_model = sys.argv[1]

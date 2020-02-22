@@ -1,7 +1,7 @@
 import os
 import sys
-import pandas
-import models as models
+# import pandas
+# import models as models
 import dataProcessing as process
 
 def data_processing():
@@ -16,38 +16,41 @@ def data_processing():
             print("Not output csv specified - using default")
         if (os.path.isdir(path)):
             try: 
-                stopWords = sys.argv[4]
-                lemmatize = sys.argv[5]
-                lemmatize_with_pos = sys.argv[6]
+                # stopWords = sys.argv[4]
+                # lemmatize = sys.argv[5]
+                # lemmatize_with_pos = sys.argv[6]
                 textRank = sys.argv[7]
                 # run data processing
                 readwrite = process.Read_Write_Data(path)
                 print("read in files")
-                readwrite.read_in_files(219510)
+                readwrite.read_in_files(2)
                 print("done reading files")
                 data = readwrite.get_df()
                 cleaner = process.Clean_Data(data)
                 print("clean data")
                 cleaner.clean_data(textRank)
                 print("done cleaning data")
-                if stopWords == "True":
-                    print("remove stop words")
-                    cleaner.remove_stop_words()
-                    print("done removing stop words")
-                if lemmatize == "True":
-                    print("lemmatize")
-                    cleaner.lemmatization(lemmatize_with_pos)
-                    print("done lemmatizing")
-                if textRank == "True":
-                    print("run text rank")
-                    textrank = process.TextRank(readwrite.get_df())
-                    textrank.main()
-                    print("text rank applied")
+                # if stopWords == "True":
+                #     print("remove stop words")
+                #     cleaner.remove_stop_words()
+                #     print("done removing stop words")
+                # if lemmatize == "True":
+                #     print("lemmatize")
+                #     cleaner.lemmatization(lemmatize_with_pos)
+                #     print("done lemmatizing")
+                # if textRank == "True":
+                #     print("run text rank")
+                #     textrank = process.TextRank(readwrite.get_df())
+                #     textrank.main()
+                #     print("text rank applied")
+                print("WORD FREQ")
+                process.WordFrequency(readwrite.get_df())
+                print("DONE")
                 data = readwrite.get_df()
                 print(readwrite.get_df())
-                print("output to csv")
-                readwrite.df_to_csv(output_csv)
-                print("csv saved")
+                # print("output to csv")
+                # readwrite.df_to_csv(output_csv)
+                # print("csv saved")
             except Exception as e:
                 print("A required boolean was not set: " + str(e))
         else :
@@ -87,6 +90,7 @@ if __name__ == "__main__":
     try:
         data_or_model = sys.argv[1]
         if data_or_model == "0":
+            print("data processing")
             data_processing()
         elif data_or_model == "1":
             model()

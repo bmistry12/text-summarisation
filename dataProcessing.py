@@ -6,211 +6,286 @@ import pandas as pd
 import networkx as nx
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet as wn
-from nltk.stem import WordNetLemmatizer 
+from nltk.stem import WordNetLemmatizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+
 class Read_Write_Data():
-	"""
-	Read in the data - read each text file that we are processing into a pd dataframe 
-	Write out data - to specified CSV file
-	"""
-	def __init__(self, loc):
-		self.datapath = loc
-		self.file_names = [file for file in os.listdir(loc) if file.endswith('.story')]
-		self.df = pd.DataFrame(columns=['file', 'text', 'summary'])
-	
-	def read_in_files(self, filesToRead):
-		files_to_read = self.file_names[:filesToRead]
-		print(len(files_to_read))
-		for file in files_to_read:
-			with open(self.datapath + "/" + file, encoding="utf8") as f:
-				data = f.read()
-				# 0 - body, 1 - summary
-				data_split = re.split("@highlight", data, maxsplit=1)
-				# appending to df 
-				self.df = self.df.append({'file': file, 'text': str(data_split[0]), 'summary': str(data_split[1])}, ignore_index=True)
-		print("read in files")
-		print(self.df.head())
+    """
+    Read in the data - read each text file that we are processing into a pd dataframe 
+    Write out data - to specified CSV file
+    """
 
-	def get_df(self):
-		return self.df
+    def __init__(self, loc):
+        self.datapath = loc
+        self.file_names = [file for file in os.listdir(
+            loc) if file.endswith('.story')]
+        self.df = pd.DataFrame(columns=['file', 'text', 'summary'])
 
-	def df_to_csv(self, csv_name):
-		self.df.to_csv(csv_name, index=True)
-	
+    def read_in_files(self, filesToRead):
+        files_to_read = self.file_names[:filesToRead]
+        print(len(files_to_read))
+        for file in files_to_read:
+            with open(self.datapath + "/" + file, encoding="utf8") as f:
+                data = f.read()
+                # 0 - body, 1 - summary
+                data_split = re.split("@highlight", data, maxsplit=1)
+                # appending to df
+                self.df = self.df.append({'file': file, 'text': str(
+                    data_split[0]), 'summary': str(data_split[1])}, ignore_index=True)
+        print("read in files")
+        print(self.df.head())
+
+    def get_df(self):
+        return self.df
+
+    def df_to_csv(self, csv_name):
+        self.df.to_csv(csv_name, index=True)
+
 
 class Clean_Data():
-	"""
-	Use the data that is read in, as a pd df, and clean it - remove any whitespace and empty columns
-	Shape the data as necessary
-	Removal of stop words - Could this cause an issue when dealing with creating gramatically correct summaries?
-	Lemmatization
-	"""
-	def __init__(self, dataframe):
-		self.df = dataframe
+    """
+    Use the data that is read in, as a pd df, and clean it - remove any whitespace and empty columns
+    Shape the data as necessary
+    Removal of stop words - Could this cause an issue when dealing with creating gramatically correct summaries?
+    Lemmatization
+    """
 
-	def clean_data(self, textRank):
-		self.df.drop_duplicates(subset=['file'],inplace=True)  #dropping duplicates
-		self.df.dropna(axis=0,inplace=True)   #dropping na
-		# clean texts
-		self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|[^\w\s\.]','',x)).apply(lambda x: re.sub(r'(\.(?=[\s\r\n]|$))','',x)).apply(lambda x: re.sub(r'\n',' ',x)).apply(lambda x: re.sub(r'\.','',x))
-		# separate the summaries using a '.' 
-		if textRank :	
-			self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s\.\@]','',x))
-		else :
-			self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s\.\@]','',x)).apply(lambda x: re.sub(r'@highlight',' ',x))
-		print("cleaned data")
-		print(self.df.head())
+    def __init__(self, dataframe):
+        self.df = dataframe
 
-	def remove_stop_words(self):
-		"""
-		remove stop words from the text	and summaries
-		"""
-		stop_words = set(stopwords.words('english'))
-		self.df['text'] = self.df['text'].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: " ".join([word for word in x if not word.lower() in stop_words]))
-		self.df['summary'] = self.df['summary'].apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: " ".join([word for word in x if not word.lower() in stop_words]))	
-		print(self.df['summary'][0])	
-		print(self.df['text'][0])
-		# print(self.df['text'])
-		print(self.df.head())
-		print("removed stop words")
+    def clean_data(self, textRank):
+        # dropping duplicates
+        self.df.drop_duplicates(subset=['file'], inplace=True)
+        self.df.dropna(axis=0, inplace=True)  # dropping na
+        # clean texts
+        self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|[^\w\s\.]', '', x)).apply(lambda x: re.sub(
+            r'(\.(?=[\s\r\n]|$))', '', x)).apply(lambda x: re.sub(r'\n', ' ', x)).apply(lambda x: re.sub(r'\.', '', x))
+        # separate the summaries using a '.'
+        if textRank:
+            self.df['summary'] = self.df['summary'].apply(
+                lambda x: re.sub(r'\n|[^\w\s\.\@]', '', x))
+        else:
+            self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(
+                r'\n|[^\w\s\.\@]', '', x)).apply(lambda x: re.sub(r'@highlight', ' ', x))
+        print("cleaned data")
+        print(self.df.head())
 
-	def getpos(self, word):
-		pos = nltk.pos_tag([word])[0][1][0]
-		wordnet_conv = {"J": wn.ADJ, "N": wn.NOUN, "V": wn.VERB, "R": wn.ADV}
-		if pos in wordnet_conv.keys():
-			return wordnet_conv.get(pos)
-		return ""
-		# wordnet pos can't deal with "I" - Preposition, "M" - modal, "C" - conjunction, "P" - pronoun
+    def remove_stop_words(self):
+        """
+        remove stop words from the text	and summaries
+        """
+        stop_words = set(stopwords.words('english'))
+        self.df['text'] = self.df['text'].apply(lambda x: nltk.word_tokenize(x)).apply(
+            lambda x: " ".join([word for word in x if not word.lower() in stop_words]))
+        self.df['summary'] = self.df['summary'].apply(lambda x: nltk.word_tokenize(x)).apply(
+            lambda x: " ".join([word for word in x if not word.lower() in stop_words]))
+        print(self.df['summary'][0])
+        print(self.df['text'][0])
+        # print(self.df['text'])
+        print(self.df.head())
+        print("removed stop words")
 
-	def lemmatization(self, pos):
-		"""
-		lemmatization of text - uses wordnet lemmatizer
-		@pos - value can be True or False. Used to indicate whether or not to use POS whilst lemmatizing
-		"""
-		# Should we not also lemmatize summaries?
-		lemmatizer = WordNetLemmatizer()
-		text_tokenized = self.df['text'].apply(lambda x: nltk.word_tokenize(x))
-		if pos == "True":
-			print("lemmatize with pos")
-			for i in range(0,len(text_tokenized)):
-				text_lemmatized = []
-				for word in text_tokenized[i]:
-					self.getpos(word)
-					pos = self.getpos(word)
-					if pos != "":
-						lemma = lemmatizer.lemmatize(word, pos)
-						text_lemmatized.append(lemma)
-					else :
-						text_lemmatized.append(word)
-				text_lemmatized = ' '.join(map(str, text_lemmatized))
-				self.df['text'][i] = text_lemmatized
-		else :	
-			print("lemmatize w/o POS")
-			# This currently doesn't output text in the right format (I think)
-			self.df['text'] = text_tokenized.apply(lambda x: [lemmatizer.lemmatize(w) for w in x])
-			self.df['text'] = self.df['text'].apply(lambda x: ' '.join(x))	
-		
+    def getpos(self, word):
+        pos = nltk.pos_tag([word])[0][1][0]
+        wordnet_conv = {"J": wn.ADJ, "N": wn.NOUN, "V": wn.VERB, "R": wn.ADV}
+        if pos in wordnet_conv.keys():
+            return wordnet_conv.get(pos)
+        return ""
+        # wordnet pos can't deal with "I" - Preposition, "M" - modal, "C" - conjunction, "P" - pronoun
 
+    def lemmatization(self, pos):
+        """
+        lemmatization of text - uses wordnet lemmatizer
+        @pos - value can be True or False. Used to indicate whether or not to use POS whilst lemmatizing
+        """
+        # Should we not also lemmatize summaries?
+        lemmatizer = WordNetLemmatizer()
+        text_tokenized = self.df['text'].apply(lambda x: nltk.word_tokenize(x))
+        if pos == "True":
+            print("lemmatize with pos")
+            for i in range(0, len(text_tokenized)):
+                text_lemmatized = []
+                for word in text_tokenized[i]:
+                    self.getpos(word)
+                    pos = self.getpos(word)
+                    if pos != "":
+                        lemma = lemmatizer.lemmatize(word, pos)
+                        text_lemmatized.append(lemma)
+                    else:
+                        text_lemmatized.append(word)
+                text_lemmatized = ' '.join(map(str, text_lemmatized))
+                self.df['text'][i] = text_lemmatized
+        else:
+            print("lemmatize w/o POS")
+            # This currently doesn't output text in the right format (I think)
+            self.df['text'] = text_tokenized.apply(
+                lambda x: [lemmatizer.lemmatize(w) for w in x])
+            self.df['text'] = self.df['text'].apply(lambda x: ' '.join(x))
+
+
+# EXTRACTIVE METHODS
 class TextRank():
-	"""
-	Run TextRank on the data to ensure model is run against the most important summaries
-	"""
-	def __init__(self, df):
-		self.df = df
-	
-	def main(self):
-		# text = self.df['text']
-		summaries = self.df['summary']
-		# update summaries
-		new_summaries = [self.rank_summaries(summary) for summary in summaries]
-		self.df['summary'] = new_summaries
+    """
+    Run TextRank on the data to ensure model is run against the most important summaries
+    """
 
-	def rank_summaries(self, summary):
-		"""
-		Rank summaries and return the one with the highest score
-		"""
-		summary_split = summary.split("@ highlight")
-		print(summary_split)
+    def __init__(self, df):
+        self.df = df
 
-		embedding_index = self.get_word_embeddings()
-		sentence_vectors  = []
-		# get word count vector for each sentence
-		for sentence in summary_split:
-			words = nltk.word_tokenize(sentence)
-			mean_vector_score = sum([embedding_index.get(word, np.zeros((100,))) for word in words])/len(words)
-			sentence_vectors.append(mean_vector_score)
-		
-		# similarity matrix
-		sim_matrix = self.get_similarity_matrix(sentence_vectors)
-		#graph of matrix - retrieve a set of scores based on page rank algorithm
-		pageRank_scores = self.get_graph(sim_matrix) 
-		# rank sentences based off scores and extract top one as the chosen sentence for training
-		sent_scores = [(pageRank_scores[i], sent) for i, sent in enumerate(summary_split)]
-		sent_scores = sorted(sent_scores, reverse=True)
-		chosen_summary = sent_scores[0][1]
-		return(chosen_summary)
+    def main(self):
+        # text = self.df['text']
+        summaries = self.df['summary']
+        # update summaries
+        new_summaries = [self.rank_summaries(summary) for summary in summaries]
+        self.df['summary'] = new_summaries
 
-	def get_similarity_matrix(self, sentence_vectors):
-		sim_matrix = np.zeros([len(sentence_vectors), len(sentence_vectors)])
-		# CSim(d1,d2) = cos(x) - use cosine similarity
-		for i, d1 in enumerate(sentence_vectors):
-			for j, d2 in enumerate(sentence_vectors):
-				if i != j :
-					print(cosine_similarity(d1.reshape(1,100), d2.reshape(1,100)))
-					sim_matrix[i][j] = cosine_similarity(d1.reshape(1,100), d2.reshape(1,100))
-		print(sim_matrix)
-		return sim_matrix
+    def rank_summaries(self, summary):
+        """
+        Rank summaries and return the one with the highest score
+        """
+        summary_split = summary.split("@ highlight")
+        print(summary_split)
 
-	def get_graph(self, sim_matrix):
-		nx_graph = nx.from_numpy_array(sim_matrix)
-		print(nx_graph)
-		scores = nx.pagerank(nx_graph)
-		print(scores)
-		return scores
-	
-	def get_word_embeddings(self):
-		"""
-		Get GloVe Word Embeddings 
-		"""
-		embedding_index = {}
-		with open('./glove/glove.6B.100d.txt', encoding="utf8") as f:
-			for line in f:
-				values = line.split()
-				word = values[0]
-				coefs = np.asarray(values[1:], dtype='float32')
-				embedding_index[word] = coefs
-		return embedding_index
+        embedding_index = self.get_word_embeddings()
+        sentence_vectors = []
+        # get word count vector for each sentence
+        for sentence in summary_split:
+            words = nltk.word_tokenize(sentence)
+            mean_vector_score = sum([embedding_index.get(
+                word, np.zeros((100,))) for word in words])/len(words)
+            sentence_vectors.append(mean_vector_score)
+
+        # similarity matrix
+        sim_matrix = self.get_similarity_matrix(sentence_vectors)
+        # graph of matrix - retrieve a set of scores based on page rank algorithm
+        pageRank_scores = self.get_graph(sim_matrix)
+        # rank sentences based off scores and extract top one as the chosen sentence for training
+        sent_scores = [(pageRank_scores[i], sent)
+                       for i, sent in enumerate(summary_split)]
+        sent_scores = sorted(sent_scores, reverse=True)
+        chosen_summary = sent_scores[0][1]
+        return(chosen_summary)
+
+    def get_similarity_matrix(self, sentence_vectors):
+        sim_matrix = np.zeros([len(sentence_vectors), len(sentence_vectors)])
+        # CSim(d1,d2) = cos(x) - use cosine similarity
+        for i, d1 in enumerate(sentence_vectors):
+            for j, d2 in enumerate(sentence_vectors):
+                if i != j:
+                    print(cosine_similarity(
+                        d1.reshape(1, 100), d2.reshape(1, 100)))
+                    sim_matrix[i][j] = cosine_similarity(
+                        d1.reshape(1, 100), d2.reshape(1, 100))
+        print(sim_matrix)
+        return sim_matrix
+
+    def get_graph(self, sim_matrix):
+        nx_graph = nx.from_numpy_array(sim_matrix)
+        print(nx_graph)
+        scores = nx.pagerank(nx_graph)
+        print(scores)
+        return scores
+
+    def get_word_embeddings(self):
+        """
+        Get GloVe Word Embeddings 
+        """
+        embedding_index = {}
+        with open('./glove/glove.6B.100d.txt', encoding="utf8") as f:
+            for line in f:
+                values = line.split()
+                word = values[0]
+                coefs = np.asarray(values[1:], dtype='float32')
+                embedding_index[word] = coefs
+        return embedding_index
 
 class WordFrequency():
 	"""
 	Run WordFrequencey on the data to ensure model is run against the most important texts and summaries
 	"""
 	def __init__(self, df):
+		print("INIT")
 		self.df = df
-	
-	def main(self):
-		# text = self.df['text']
-		summaries = self.df['summary']
-		# update summaries
-		new_summaries = [self.word_frequency(summary) for summary in summaries]
-		self.df['summary'] = new_summaries
+		self.main()
 
+	def main(self):
+		print("HERE")
+        # text = self.df['text']
+		summaries = self.df['summary']
+        # update summaries
+		sentence_scores = [self.score_sentences(summary) for summary in summaries]
+		print("SENT SCORES")
+		print(sentence_scores)
+        # sentence scores = [("sentence1", value1) ... ("sentecex", valuex)]
+		self.df['summary'] = [self.get_best_summary(sentences) for sentences in sentence_scores]
+		
 	def word_frequency(self, document):
-		word_count = {}
+		print("word freq tabling")
+		freq_table = {}
 		words = nltk.word_tokenize(document)
 		for word in words:
-			if word in word_count:
-				word_count[word] = word_count.get(word) + 1
+			if word in freq_table:
+				freq_table[word] = freq_table.get(word) + 1
 			else:
-				word_count[word] = 1
+				freq_table[word] = 1
+		# cut down the frequency table so that only common words are scored for
+		freq_table = sorted(freq_table.items(), key=lambda x: x[1], reverse=True)
+		print(freq_table)
+		scorable_words = []
+		for word, occ in freq_table:
+			# set threshold as words appearing two times or more
+			if int(occ) > 0:
+				scorable_words.append(word)
+			else:
+				break
+		print("scorable words")
+		print(scorable_words)
+		return scorable_words
+
+	def score_sentences(self, document):
+		sent_scores = []
+		scorable_words = self.word_frequency(document)
+		summary_split = document.split("@highlight")
+		sentenceValue = 0
+		sent_len = 0
+		print("eachsummary")
+		for summary in summary_split:
+			print(summary)
+			words = nltk.word_tokenize(summary)
+			sent_len = len(words)
+			for word in words:
+				if word in scorable_words:
+					sentenceValue =+ 1
+			print(sentenceValue)
+			print(sent_len)
+			sentenceValue = sentenceValue / sent_len
+			print(sentenceValue)
+			print("---")
+			sent_scores.append((summary, sentenceValue))
+		print(sent_scores)
+		return sent_scores
+
+	def get_best_summary(self, sent_scores):
+		print("get best")
+		print(sent_scores)
+		best_val = 0
+		best_sent = ""
+		for (sentence, val) in sent_scores:
+			print(best_val)
+			print(val)
+			if val > best_val:
+				best_sent = sentence
+				best_val = val
+		print("BET SENTECES")
+		print(best_sent)
+		print(best_val)
+		return best_sent
 
 class SentencePosition():
-	"""
-	Run WordFrequencey on the data to ensure model is run against the most important texts
-	"""
-	def __init__(self, df):
-		self.df = df
+    """
+    Run SentencePosition on the data to ensure model is run against the most important texts
+    """
 
-
-		
+    def __init__(self, df):
+        self.df = df

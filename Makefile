@@ -6,9 +6,9 @@ OUTPUT_CSV="./data/dailymail-nodp.csv"
 TEST=1
 MODEL_ID=1  # 0 = unidirectional, 1=bidirectional, 2=GloVe model
 WORD_REMOVAL=False
-STOP_WORDS=True
-LEMMATIZE=True
-LEMMATIZE_WITH_POS=True
+STOP_WORDS=False
+LEMMATIZE=False
+LEMMATIZE_WITH_POS=False
 TEXT_RANK=False
 
 ## Commands

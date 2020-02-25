@@ -1,5 +1,5 @@
 # Minimising the Universe.
-## Finding the Optimal Summary Using Abstractive Summarization Methods.
+## Finding the Optimal Summary By Combining Extractive and Abstractive Summarization Methods.
 
 ### Setup
 - Install required dependenices (required for first run)
@@ -13,13 +13,17 @@
     ```
 
 ### Run
-- To run with default settigs
+- To run data processing with default settings
     ```
-    make run
+    make run-data
     ```
-- To alter runtime variables
+- To run model with default settings
     ```
-    make run TRAIN_DATA_PATH=<> OUTPUT_CSV=<>
+    make run-model
+    ```
+- To alter runtime variables follow the following method
+    ```
+    make run-data TRAIN_DATA_PATH=<> OUTPUT_CSV=<>
     ```
 
 ### Proposal
@@ -65,21 +69,21 @@ End Of Semester 1                       :         des1, 2019-12-13, 1d
 section Project Semester 2
 Start of Semester 2                     :         des1, 2020-01-13, 1d
 Experimenting with WordEmbeddings       :done,    des1, 2020-01-15, 2020-01-22
-Experimenting with TextRank             :active,    des1, 2020-01-22, 2020-01-26
+Experimenting with TextRank             :done,    des1, 2020-01-22, 2020-01-26
 Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
 Ontology Based Classification           :         des1, 2020-02-02, 2020-02-13
-Adding in some more Extractive methods  :         des1, 2020-02-05, 2020-02-20
+Adding in some more Extractive methods  :active,  des1, 2020-02-05, 2020-02-20
 Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19
-Experimenting with Catch Phrases        :         des1, 2020-02-05, 2020-02-08
+Experimenting with Word Frequency        :done,         des1, 2020-02-05, 2020-02-08
 Experimenting with Grammar based methods:         des1, 2020-02-09, 2020-02-15
-Testing the model with different data   :         des1, 2020-02-15, 2020-02-20 
+Testing the model with different data   :active,  des1, 2020-02-15, 2020-02-20 
 Front End Implementation                :         des1, 2020-02-20, 2020-02-28
 Experimental Features Coding Completion :         des1, 2020-02-29, 1d
 
 Section Finalising
-Project Refractoring                    :         des1, 2020-03-01, 2020-03-08
-Documentation                           :         des1, 2020-03-10, 2020-03-21
-Demo Week                               :         des1, 2020-03-17, 2020-03-21
+Project Refractoring                    :active,  des1, 2020-03-01, 2020-03-08
+Documentation                           :active,  des1, 2020-03-10, 2020-03-21
+Demo Week                               :         des1, 2020-03-03, 2020-03-21
 Tweaks Based On Feedback                :         des1, 2020-03-21, 2020-03-26
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
@@ -121,21 +125,21 @@ Start of Semester 2                     :         des1, 2020-01-13, 1d
 Experimenting with WordEmbeddings       :done,    des1, 2020-01-13, 2020-01-26
 K-Folds Cross Validation Algorithm      :         des1, 2020-01-13, 2020-01-16
 Ontology Based Classification           :         des1, 2020-01-16, 2020-01-20
-Experimenting with TextRank             :active,  des1, 2020-02-02, 2020-02-03
+Experimenting with TextRank             :done,  des1, 2020-02-02, 2020-02-03
 Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
-Adding in some more Extractive methods  :         des1, 2020-02-05, 2020-02-20
+Adding in some more Extractive methods  :active,  des1, 2020-02-05, 2020-02-20
 Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19
-Experimenting with Catch Phrases        :         des1, 2020-02-05, 2020-02-08
-Experimenting with Grammar based methods:         des1, 2020-02-09, 2020-02-15
-Testing the model with different data   :         des1, 2020-02-15, 2020-02-20 
+Experimenting with Word Frequency        :done,         des1, 2020-02-20, 2020-02-22
+Experimenting with Grammar based methods:active,   des1, 2020-02-20, 2020-02-22
+Testing the model with different data   :active,  des1, 2020-02-15, 2020-02-26 
 Front End Implementation                :         des1, 2020-02-20, 2020-02-28
 Experimental Features Coding Completion :         des1, 2020-02-29, 1d
 
 Section Finalising
-Project Refractoring                    :         des1, 2020-03-01, 2020-03-08
-Documentation                           :         des1, 2020-03-10, 2020-03-21
-Demo Week                               :         des1, 2020-03-17, 2020-03-21
-Tweaks Based On Feedback                :         des1, 2020-03-21, 2020-03-26
+Project Refractoring                    :done,  des1, 2020-02-20, 2020-02-23
+Documentation                           :active,  des1, 2020-02-15, 2020-03-21
+Demo Week                               :         des1, 2020-03-02, 2020-03-06
+Tweaks Based On Feedback                :         des1, 2020-03-06, 2020-03-10
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
 
@@ -144,9 +148,12 @@ Submission Deadline                     :         des1, 2020-03-27, 1d
 - Data processing
     - Read in data
     - Clean data
+        - Stop Word Removal
         - POS
         - Lemmatization
-        - Stop Word Removal
+    - Extractive Methods
+      - TextRank?
+      - Word Frequency?
     - Reshape data    
 - Write dataframe to CSV
 - Read CSV into model

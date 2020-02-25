@@ -2,6 +2,7 @@ import os
 import sys
 # import pandas
 # import models as models
+import extractive as exdp
 import dataProcessing as process
 
 def data_processing():
@@ -36,7 +37,8 @@ def data_processing():
                 # run data processing
                 readwrite = process.Read_Write_Data(path)
                 print("read in files")
-                readwrite.read_in_files(2)
+                # 219505 = dm
+                readwrite.read_in_files(5000)
                 print("done reading files")
                 data = readwrite.get_df()
                 cleaner = process.Clean_Data(data)
@@ -53,20 +55,19 @@ def data_processing():
                     print("done lemmatizing")
                 if textRank == "True":
                     print("run text rank")
-                    textrank = process.TextRank(readwrite.get_df())
-                    textrank.main()
+                    exdp.TextRank(readwrite.get_df())
                     print("text rank applied")
                 if wordFreq == "True":
                     print("run word frequency")
-                    process.WordFrequency(readwrite.get_df())
+                    exdp.WordFrequency(readwrite.get_df())
                     print("word frequency applied")
                 data = readwrite.get_df()
                 print(readwrite.get_df())
-                # print("output to csv")
-                # readwrite.df_to_csv(output_csv)
-                # print("csv saved")
+                print("output to csv")
+                readwrite.df_to_csv(output_csv)
+                print("csv saved")
             except Exception as e:
-                print("A required boolean was not set: " + str(e))
+                print("A required boolean was not set? Or " + str(e))
         else :
             print(path + " is not a valid directory")
     except Exception as e:

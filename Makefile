@@ -3,10 +3,15 @@
 ## Variables
 ### Data Processing
 TRAIN_DATA_PATH="./dailymail/originals"
-OUTPUT_CSV="./data/dailymail-nodp.csv"
+OUTPUT_CSV="./data/dailymail-wf.csv"
+TRAIN_DATA_PATH="/tmp/bhm699/dailymail/originals"
+OUTPUT_CSV="/tmp/bhm699/dailymail-wf.csv"
+
 STOP_WORDS=True
 LEMMATIZE=True
 LEMMATIZE_WITH_POS=True
+
+#### Only one of these can be true at any given time
 TEXT_RANK=False
 WORD_FREQ=True
 ### Model Running

@@ -31,7 +31,7 @@ class Common():
         self.FILE_NAME = "all.csv" # csv data to run model against
         self.MAX_TEXT_LEN = 100
         self.MAX_SUMMARY_LEN = 20
-        self.UNCOMMON_WORD_THRESHOLD = 100 # only matters in UNCOMMON_WORDS is set
+        self.UNCOMMON_WORD_THRESHOLD = 0 # only matters in UNCOMMON_WORDS is set
         self.COLAB = False  # true if running on colab
         self.build_number = "1"
         self.rouge = Rouge()

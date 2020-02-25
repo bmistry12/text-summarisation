@@ -97,7 +97,7 @@ class WordFrequency():
 		self.test = 0 # this is a hack for getting the correct article for each summary
 		sentence_scores = [self.score_sentences(summary, texts) for summary in summaries]
 		print("Sentence Scores")
-		print(sentence_scores)
+		# print(sentence_scores)
         # sentence scores = [("sentence1", value1) ... ("sentecex", valuex)]
 		self.df['summary'] = [self.get_best_summary(sentences) for sentences in sentence_scores]
 
@@ -120,7 +120,9 @@ class WordFrequency():
 				if word in scorable_words:
 					sentenceValue =+ 1
 			# normalise sentence value based on sentence length so that longer sentences do not get an automatic advantage over shorter ones
-			sentenceValue = sentenceValue / sent_len
+            # as null rows havent been dropped yet there may be scores of 0
+            if sentenceValue != 0 and sent_len !=:
+                sentenceValue = sentenceValue / sent_len
 			sent_scores.append((summary, sentenceValue))
 		return sent_scores
 

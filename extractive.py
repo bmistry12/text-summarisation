@@ -150,17 +150,17 @@ class WordFrequency():
         self.test = self.test + 1 # increment hack variable
         return scorable_words
 
-        def get_best_summary(self, sent_scores):
-            """
-             Get the best summary based on which has the greatest score
-            """
-            best_val = 0
-            best_sent = ""
-            for (sentence, val) in sent_scores:
-                if val > best_val:
-                    best_sent = sentence
-                    best_val = val
-            return best_sent
+    def get_best_summary(self, sent_scores):
+        """
+            Get the best summary based on which has the greatest score
+        """
+        best_val = 0
+        best_sent = ""
+        for (sentence, val) in sent_scores:
+            if val > best_val:
+                best_sent = sentence
+                best_val = val
+        return best_sent
 
 class SentencePosition():
     """

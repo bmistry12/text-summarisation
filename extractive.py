@@ -206,3 +206,100 @@ class SentencePosition():
                     sent_with_rank[sentence] = max_rank - (len_sent - i) + 1
         # return the new article joined together
         return "".join(sent_with_rank.keys())
+
+#TO DO
+class TFIDF():
+    """
+        Run WordFrequency on the data to ensure model is run against the summaries that has the highest word frequency rank with the main article
+    """
+    def __init__(self, df):
+        self.df = df
+        self.main()
+
+    def main(self):
+        texts = self.df['text']
+        summaries = self.df['summary']
+        # get sentence scores for each summary
+        self.test = 0 # this is a hack for getting the correct article for each summary
+        sentence_scores = [self.score_sentences(summary, texts) for summary in summaries]
+        print("Sentence Scores")
+        # print(sentence_scores)
+        # sentence scores = [("sentence1", value1) ... ("sentecex", valuex)]
+        self.df['summary'] = [self.get_best_summary(sentences) for sentences in sentence_scores]
+
+    def score_sentences(self, document, texts):
+        """"
+        Score each summary based on the number of words that occurs in them that also occur in the highest occuring words in the main document text
+        """
+        sent_scores = []
+        # call word_frequency to get a word frequency table (or rather list of words) from the respective article
+        scorable_words = self.word_frequency(texts[self.test])
+        # split the summaries by @highlight token
+        summary_split = document.split("@ highlight")
+        sentenceValue = 0
+        sent_len = 0
+        # for each summary calculate the sentence value
+        for summary in summary_split:
+            words = nltk.word_tokenize(summary)
+            sent_len = len(words)
+            for word in words:
+                if word in scorable_words:
+                    sentenceValue =+ 1
+            # normalise sentence value based on sentence length so that longer sentences do not get an automatic advantage over shorter ones
+            # as null rows havent been dropped yet there may be scores of 0
+            if (sentenceValue !=0 and sent_len !=0):
+                sentenceValue = sentenceValue / sent_len
+            sent_scores.append((summary, sentenceValue))
+        return sent_scores
+
+    def word_frequency(self, document):
+        """
+            Calculate a word frequency table for the words in a given documents
+            After this, it removes any words that occur below a given threshold value, returning a list of "acceptable" words from the original corpus
+        """
+        freq_table = {}
+        words = nltk.word_tokenize(document)
+        for word in words:
+            if word in freq_table:
+                freq_table[word] = freq_table.get(word) + 1
+            else:
+                freq_table[word] = 1
+        # cut down the frequency table so that only common words are scored for
+        freq_table = sorted(freq_table.items(), key=lambda x: x[1], reverse=True)
+        scorable_words = []
+        for word, occ in freq_table:
+            # set threshold as words appearing 0 times or more
+            if int(occ) > 0:
+                scorable_words.append(word)
+            else:
+                break
+        self.test = self.test + 1 # increment hack variable
+        return scorable_words
+
+        def get_best_summary(self, sent_scores):
+            """
+             Get the best summary based on which has the greatest score
+            """
+            best_val = 0
+            best_sent = ""
+            for (sentence, val) in sent_scores:
+                if val > best_val:
+                    best_sent = sentence
+                    best_val = val
+            return best_sent
+#TO DO
+class PCA():
+    pass
+#TO DO
+class OntologyClassification():
+    pass
+#TO DO
+class Coverage():
+    pass
+#TO DO
+class NWords():
+    pass
+#TO DO
+class StopWords():
+    # corpus generated stop words
+    pass

@@ -16,6 +16,7 @@ def data_processing():
         @arg6 = lemmatize with part of speech?
         @arg7 = run text rank?
         @arg8 = run word freq?
+        @arg9 = run sent pos?
     """
     output_csv = "default.csv" # default value
     try:
@@ -34,16 +35,17 @@ def data_processing():
                 lemmatize_with_pos = sys.argv[6]
                 textRank = sys.argv[7]
                 wordFreq = sys.argv[8]
+                sentPost = sys.argv[9]
                 # run data processing
                 readwrite = process.Read_Write_Data(path)
                 print("read in files")
                 # 219505 = dm
-                readwrite.read_in_files(5000)
+                readwrite.read_in_files(219505)
                 print("done reading files")
                 data = readwrite.get_df()
                 cleaner = process.Clean_Data(data)
                 print("clean data")
-                cleaner.clean_data(textRank, wordFreq)
+                cleaner.clean_data(textRank, wordFreq, sentPost)
                 print("done cleaning data")
                 if stopWords == "True":
                     print("remove stop words")
@@ -61,6 +63,10 @@ def data_processing():
                     print("run word frequency")
                     exdp.WordFrequency(readwrite.get_df())
                     print("word frequency applied")
+                if sentPost == "True":
+                    print("run sentence position")
+                    exdp.SentencePosition(readwrite.get_df())
+                    print("sentence position applied")
                 data = readwrite.get_df()
                 print(readwrite.get_df())
                 print("output to csv")
@@ -102,6 +108,7 @@ if __name__ == "__main__":
         @arg6 = lemmatize with part of speech
         @arg7 = run text rank
         @arg8 = run word frequency
+        @arg9 = run sent pos
     """
     try:
         data_or_model = sys.argv[1]

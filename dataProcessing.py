@@ -51,13 +51,33 @@ class Clean_Data():
     def __init__(self, dataframe):
         self.df = dataframe
 
-    def clean_data(self, textRank, wordFreq):
+    def sent_pos_tagging(self, doc):
+        print("sent_post_tagging")
+        print(doc)
+        doc = [re.sub(r'\(CNN\)|(Daily\sMail)|--|[^\w\s\.]', '', x) for x in doc]
+        doc = [re.sub(r'(\.(?=[\s\r\n]|$))', '', x) for x in doc]
+        doc = [re.sub(r'\n', ' ', x) for x in doc]
+        doc = [re.sub(r'\.', '', x) for x in doc]
+        doc = [x + ' <eos>' for x in doc]
+        print("doc")
+        print(doc)
+        doc = "".join(doc)
+        return doc
+
+    def clean_data(self, textRank, wordFreq, sentPos):
         # dropping duplicates
         self.df.drop_duplicates(subset=['file'], inplace=True)
         self.df.dropna(axis=0, inplace=True)  # dropping na
         # clean texts
-        self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|--|[^\w\s\.]', '', x)).apply(lambda x: re.sub(
-            r'(\.(?=[\s\r\n]|$))', '', x)).apply(lambda x: re.sub(r'\n', ' ', x)).apply(lambda x: re.sub(r'\.', '', x))
+        if (sentPos == "True"):
+            print("sent position clean")
+            # add in eos tokens
+            self.df['text'] = self.df['text'].apply(lambda x: nltk.sent_tokenize(x, language='english')).apply(lambda x: self.sent_pos_tagging(x))
+            print("after")
+            print(self.df['text'][0])
+            
+        else: 
+            self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|(Daily\sMail)|--|[^\w\s\.]', '', x)).apply(lambda x: re.sub(r'(\.(?=[\s\r\n]|$))', '', x)).apply(lambda x: re.sub(r'\n', ' ', x)).apply(lambda x: re.sub(r'\.', '', x))
         # separate the summaries using a '.'
         if (textRank == "True") or (wordFreq == "True"):
             self.df['summary'] = self.df['summary'].apply(

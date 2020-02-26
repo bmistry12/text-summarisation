@@ -51,20 +51,27 @@ class Clean_Data():
     def __init__(self, dataframe):
         self.df = dataframe
 
-    def sent_pos_tagging(self, doc):
-        print("sent_post_tagging")
-        print(doc)
+    def sent_pos_clean(self, doc):
+        """
+            Cleaning Data when sentPos=True. We pass in an array of tokenized sentences that need to be cleaned and have <eos> tokens appended to the end.
+        """
+        print("sent_pos_clean")
         doc = [re.sub(r'\(CNN\)|(Daily\sMail)|--|[^\w\s\.]', '', x) for x in doc]
         doc = [re.sub(r'(\.(?=[\s\r\n]|$))', '', x) for x in doc]
         doc = [re.sub(r'\n', ' ', x) for x in doc]
         doc = [re.sub(r'\.', '', x) for x in doc]
+        # add eos token so that we can split the document into sentences easier in sent_position method
         doc = [x + ' <eos>' for x in doc]
-        print("doc")
-        print(doc)
         doc = "".join(doc)
         return doc
 
     def clean_data(self, textRank, wordFreq, sentPos):
+        """
+            Clean data by removing punctuation and words relating to the source of the article
+            @textRank - True if text rank is being run. In this case the summary seperator @highlight is not removed
+            @wordFreq - True if word frequency is being run. In this case the summary seperator @highlight is not removed
+            @sentPos - True if sentence position is being run. In this case sent_pos_clean is called and <eos> tokens are added to the end of each sentence.
+        """
         # dropping duplicates
         self.df.drop_duplicates(subset=['file'], inplace=True)
         self.df.dropna(axis=0, inplace=True)  # dropping na
@@ -72,10 +79,7 @@ class Clean_Data():
         if (sentPos == "True"):
             print("sent position clean")
             # add in eos tokens
-            self.df['text'] = self.df['text'].apply(lambda x: nltk.sent_tokenize(x, language='english')).apply(lambda x: self.sent_pos_tagging(x))
-            print("after")
-            print(self.df['text'][0])
-            
+            self.df['text'] = self.df['text'].apply(lambda x: nltk.sent_tokenize(x, language='english')).apply(lambda x: self.sent_pos_clean(x))            
         else: 
             self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|(Daily\sMail)|--|[^\w\s\.]', '', x)).apply(lambda x: re.sub(r'(\.(?=[\s\r\n]|$))', '', x)).apply(lambda x: re.sub(r'\n', ' ', x)).apply(lambda x: re.sub(r'\.', '', x))
         # separate the summaries using a '.'
@@ -97,9 +101,6 @@ class Clean_Data():
             lambda x: " ".join([word for word in x if not word.lower() in stop_words]))
         self.df['summary'] = self.df['summary'].apply(lambda x: nltk.word_tokenize(x)).apply(
             lambda x: " ".join([word for word in x if not word.lower() in stop_words]))
-        print(self.df['summary'][0])
-        print(self.df['text'][0])
-        # print(self.df['text'])
         print(self.df.head())
         print("removed stop words")
 

@@ -183,12 +183,13 @@ class SentencePosition():
         print("Sentence Scores")
         texts = self.df['text']
         new_texts = [self.sentence_ranker(text) for text in texts]
-        self.df['texts'] = new_texts
-        print(self.df['texts'].head())
+        self.df['text'] = new_texts
+        print(self.df['text'].head())
 
     def sentence_ranker(self, article):  
         print("Sentence ranker")
         max_rank = 5 # we only care about the first and last five sentence.
+        # split by <eos> token added in sent_pos_cleaner
         sentences = article.split("< eos >")
         sent_with_rank = {}
         len_sent = len(sentences)

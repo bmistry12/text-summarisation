@@ -39,8 +39,8 @@ def data_processing():
                 # run data processing
                 readwrite = process.Read_Write_Data(path)
                 print("read in files")
-                # 219505 = dm
-                readwrite.read_in_files(219505)
+                # 219505 = dm 92600= cnn
+                readwrite.read_in_files(92600)
                 print("done reading files")
                 data = readwrite.get_df()
                 cleaner = process.Clean_Data(data)

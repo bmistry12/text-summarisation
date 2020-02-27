@@ -1,7 +1,7 @@
 import nltk
 import numpy as np
 import pandas as pd
-# import networkx as nx
+import networkx as nx
 from sklearn.metrics.pairwise import cosine_similarity
 """
 All Extractive Data Processing Methods In One Python File

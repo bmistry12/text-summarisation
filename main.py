@@ -40,7 +40,7 @@ def data_processing():
                 readwrite = process.Read_Write_Data(path)
                 print("read in files")
                 # 219505 = dm 92600= cnn
-                readwrite.read_in_files(92600)
+                readwrite.read_in_files(92580)
                 print("done reading files")
                 data = readwrite.get_df()
                 cleaner = process.Clean_Data(data)
@@ -55,6 +55,8 @@ def data_processing():
                     print("lemmatize")
                     cleaner.lemmatization(lemmatize_with_pos)
                     print("done lemmatizing")
+                #drop null rows
+                cleaner.drop_null_rows()
                 if textRank == "True":
                     print("run text rank")
                     exdp.TextRank(readwrite.get_df())

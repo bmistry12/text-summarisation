@@ -140,3 +140,17 @@ class Clean_Data():
             self.df['text'] = text_tokenized.apply(
                 lambda x: [lemmatizer.lemmatize(w) for w in x])
             self.df['text'] = self.df['text'].apply(lambda x: ' '.join(x))
+
+    def drop_null_rows(self):
+        """Check for rows with null values in them, and copy these into a new dataframe (df1). 
+        Drop any rows in df1 from df to ensure no NaN valued rows are present/
+        *Note. using simply dropna(how='any') does not seem to drop any of the rows*"""
+        print(self.df.isnull().values.any())
+        print(self.df.shape)
+
+        df1 = self.df[self.df.isna().any(axis=1)]
+        print(df1.shape)
+
+        self.df.drop(df1.index, axis=0, inplace=True)
+        print(self.df.shape)
+        print(self.df.isnull().values.any())

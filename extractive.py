@@ -65,7 +65,7 @@ class TextRank():
     def get_graph(self, sim_matrix):
         nx_graph = nx.from_numpy_array(sim_matrix)
         print(nx_graph)
-        scores = nx.pagerank(nx_graph)
+        scores = nx.pagerank(nx_graph, max_iter=200, alpha=0.9)
         print(scores)
         return scores
 

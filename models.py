@@ -1,20 +1,16 @@
-import re
 import math
-import nltk
 import pickle
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from keras.layers import Input, LSTM, Embedding, Dense, Concatenate, TimeDistributed, Bidirectional
-from tensorflow.keras.layers import Attention
-from keras.models import Model, load_model
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
 from keras.optimizers import RMSprop
+from keras.models import Model, load_model
+from tensorflow.keras.layers import Attention
+from keras.preprocessing.text import Tokenizer
 from sklearn.model_selection import train_test_split
+from keras.preprocessing.sequence import pad_sequences
+from keras.callbacks import EarlyStopping, ModelCheckpoint
+from keras.layers import Input, LSTM, Embedding, Dense, Concatenate, Bidirectional
 import modelCommon as modelCommon
 
 

@@ -1,7 +1,6 @@
 import os
 import sys
-# import pandas
-# import models as models
+import models as models
 import extractive as exdp
 import dataProcessing as process
 
@@ -37,13 +36,13 @@ def data_processing():
                 wordFreq = sys.argv[8]
                 sentPost = sys.argv[9]
                 # run data processing
-                readwrite = process.Read_Write_Data(path)
+                readwrite = process.ReadWriteData(path)
                 print("read in files")
                 # 219505 = dm 92600= cnn
                 readwrite.read_in_files(92580)
                 print("done reading files")
                 data = readwrite.get_df()
-                cleaner = process.Clean_Data(data)
+                cleaner = process.CleanData(data)
                 print("clean data")
                 cleaner.clean_data(textRank, wordFreq, sentPost)
                 print("done cleaning data")
@@ -88,13 +87,13 @@ def model():
         print(model_id)
         if model_id == "0":
             # unidirectional model
-            unimodel = models.UniModel(word_removal)
+            models.UniModel(word_removal)
         elif model_id == "1":
             # bidirectional model
-            bimodel = models.BiModel(word_removal)
+            models.BiModel(word_removal)
         elif model_id == "2":
             # glove model
-            glovemodel = models.GloveModel(word_removal)
+            models.GloveModel(word_removal)
         else:
             raise Exception("This is not a valid model id - use 0 for unidirectional, 1 for bidirectional and 2 for glove")
     except Exception as e:

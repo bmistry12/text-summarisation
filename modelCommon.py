@@ -2,21 +2,11 @@ import re
 import nltk
 import numpy as np
 import pandas as pd
+from rouge import Rouge
 import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet as wn
-# from nltk.stem import WordNetLemmatizer
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from keras.layers import Input, LSTM, Embedding, Dense, Concatenate, TimeDistributed
-from tensorflow.keras.layers import Attention
-from keras.models import Model, load_model
-from keras.callbacks import EarlyStopping, ModelCheckpoint
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from keras.optimizers import RMSprop
 from sklearn.model_selection import train_test_split
-from rouge import Rouge
 
 class Common():
     def __init__(self):

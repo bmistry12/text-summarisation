@@ -13,7 +13,6 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras.layers import Input, LSTM, Embedding, Dense, Concatenate, Bidirectional
 import modelCommon as modelCommon
 
-
 class UniModel():
     def __init__(self, word_removal):
         self.common = modelCommon.Common()

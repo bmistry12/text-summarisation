@@ -47,6 +47,7 @@ class TextRank():
                        for i, sent in enumerate(summary_split)]
         sent_scores = sorted(sent_scores, reverse=True)
         chosen_summary = sent_scores[0][1]
+        print(chosen_summary)
         return(chosen_summary)
 
     def get_similarity_matrix(self, sentence_vectors):
@@ -60,13 +61,25 @@ class TextRank():
                     sim_matrix[i][j] = cosine_similarity(
                         d1.reshape(1, 100), d2.reshape(1, 100))
         print(sim_matrix)
+        print(sim_matrix)
         return sim_matrix
 
     def get_graph(self, sim_matrix):
         nx_graph = nx.from_numpy_array(sim_matrix)
+        print("nx_graph")
         print(nx_graph)
-        scores = nx.pagerank(nx_graph, max_iter=200, alpha=0.9)
-        print(scores)
+        try:
+            scores = nx.pagerank(nx_graph, max_iter=200, alpha=0.9)
+        except Exception as e:
+            print("Error page rank : " + str(e))
+        else:
+            # hopefully power iteration errors will land here 
+            # instead of running page rank we'll deal with this by simply averaging the scores over each matrix row
+            print("Else: ")       
+            scores = [] 
+            for row in sim_matrix:
+                print(row)
+                scores.append(np.average(row))
         return scores
 
     def get_word_embeddings(self):

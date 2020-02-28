@@ -10,11 +10,11 @@ OUTPUT_CSV="./data/cnn-tr.csv"
 STOP_WORDS=True
 LEMMATIZE=True
 LEMMATIZE_WITH_POS=True
-
 #### Only one of these can be true at any given time
 TEXT_RANK=True
 WORD_FREQ=False
 SENT_POS=False
+
 ### Model Running
 MODEL_ID=1  # 0 = unidirectional, 1=bidirectional, 2=GloVe model
 WORD_REMOVAL=False # remove words using uncommon_word_thr

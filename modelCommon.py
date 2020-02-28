@@ -292,10 +292,11 @@ class Common():
                 print(summary)
                 print("-----")
                 generated_summary.append(summary)
-                score = self.getRouge(str(summary), str(original))
-                f_ov += float(score[0].get('rouge-1').get('f'))
-                p_ov += float(score[0].get('rouge-1').get('p'))
-                r_ov += float(score[0].get('rouge-1').get('r'))
+                if summary != "" :
+                    score = self.getRouge(str(summary), str(original))
+                    f_ov += float(score[0].get('rouge-1').get('f'))
+                    p_ov += float(score[0].get('rouge-1').get('p'))
+                    r_ov += float(score[0].get('rouge-1').get('r'))
         return f_ov, p_ov, r_ov
 
     def getRouge(self, gt, pred):

@@ -66,13 +66,9 @@ class TextRank():
 
     def get_graph(self, sim_matrix):
         nx_graph = nx.from_numpy_array(sim_matrix)
-        print("nx_graph")
-        print(nx_graph)
         try:
             scores = nx.pagerank(nx_graph, max_iter=200, alpha=0.9)
-        except Exception as e:
-            print("Error page rank : " + str(e))
-        else:
+        except Exception:
             # hopefully power iteration errors will land here 
             # instead of running page rank we'll deal with this by simply averaging the scores over each matrix row
             print("Else: ")       

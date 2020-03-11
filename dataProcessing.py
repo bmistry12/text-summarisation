@@ -94,11 +94,9 @@ class CleanData():
             self.df['text'] = self.df['text'].apply(lambda x: re.sub(r'\(CNN\)|(Daily\sMail)|--|[^\w\s\.]', '', x)).apply(lambda x: re.sub(r'(\.(?=[\s\r\n]|$))', '', x)).apply(lambda x: re.sub(r'\n', ' ', x)).apply(lambda x: re.sub(r'\.', '', x))
         # separate the summaries using a '.'
         if (textRank == "True") or (wordFreq == "True"):
-            self.df['summary'] = self.df['summary'].apply(
-                lambda x: re.sub(r'\n|[^\w\s\.\@]', '', x))
+            self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s\.\@]', '', x))
         else:
-            self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(
-                r'\n|[^\w\s\.\@]', '', x)).apply(lambda x: re.sub(r'@highlight', ' ', x))
+            self.df['summary'] = self.df['summary'].apply(lambda x: re.sub(r'\n|[^\w\s\.\@]', '', x)).apply(lambda x: re.sub(r'@highlight', ' ', x))
         print("cleaned data")
         print(self.df.head())
 

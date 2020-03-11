@@ -10,13 +10,11 @@ class TextRank():
     """
     Run TextRank on the data to ensure model is run against the most important summaries
     """
-
     def __init__(self, df):
         self.df = df
         self.main()
 
     def main(self):
-        # text = self.df['text']
         summaries = self.df['summary']
         # update summaries
         new_summaries = [self.rank_summaries(summary) for summary in summaries]
@@ -27,7 +25,6 @@ class TextRank():
         Rank summaries and return the one with the highest score
         """
         summary_split = summary.split("@ highlight")
-        print(summary_split)
 
         embedding_index = self.get_word_embeddings()
         sentence_vectors = []
@@ -51,6 +48,7 @@ class TextRank():
         return(chosen_summary)
 
     def get_similarity_matrix(self, sentence_vectors):
+        print("get sun mat")
         sim_matrix = np.zeros([len(sentence_vectors), len(sentence_vectors)])
         # CSim(d1,d2) = cos(x) - use cosine similarity
         for i, d1 in enumerate(sentence_vectors):
@@ -60,21 +58,19 @@ class TextRank():
                         d1.reshape(1, 100), d2.reshape(1, 100)))
                     sim_matrix[i][j] = cosine_similarity(
                         d1.reshape(1, 100), d2.reshape(1, 100))
-        print(sim_matrix)
-        print(sim_matrix)
         return sim_matrix
 
     def get_graph(self, sim_matrix):
+        print(sim_matrix.shape)
         nx_graph = nx.from_numpy_array(sim_matrix)
         try:
-            scores = nx.pagerank(nx_graph, max_iter=200, alpha=0.9)
+            # limit to 50 iterations to speed up processing
+            scores = nx.pagerank(nx_graph, max_iter=50, alpha=0.85)
         except Exception:
-            # hopefully power iteration errors will land here 
-            # instead of running page rank we'll deal with this by simply averaging the scores over each matrix row
-            print("Else: ")       
+            # dealing with potential power iteration errors
+            # instead of running page rank we'll deal with this by simply averaging the scores over each matrix row      
             scores = [] 
             for row in sim_matrix:
-                print(row)
                 scores.append(np.average(row))
         return scores
 
@@ -106,7 +102,6 @@ class WordFrequency():
         self.sent_pos = 0 # this is a hack for getting the correct article for each summary
         sentence_scores = [self.score_sentences(summary, texts) for summary in summaries]
         print("Sentence Scores")
-        # print(sentence_scores)
         # sentence scores = [("sentence1", value1) ... ("sentecex", valuex)]
         self.df['summary'] = [self.get_best_summary(sentences) for sentences in sentence_scores]
 
@@ -151,12 +146,13 @@ class WordFrequency():
         freq_table = sorted(freq_table.items(), key=lambda x: x[1], reverse=True)
         scorable_words = []
         for word, occ in freq_table:
-            # set threshold as words appearing 0 times or more
+            # set threshold as words appearing x times or more - set to optimal valeue = 0
+            # in hindsight this can just be deleted
             if int(occ) > 0:
                 scorable_words.append(word)
             else:
                 break
-        self.sent_pos = self.sent_pos + 1 # increment hack variable
+        self.sent_pos = self.sent_pos + 1 
         return scorable_words
 
     def get_best_summary(self, sent_scores):
@@ -173,17 +169,9 @@ class WordFrequency():
 
 class SentencePosition():
     """
-        Run SentencePosition on the data to ensure model is run against the most important sentences in the articles
-        Sentences in the beginning define the theme of
-        the document whereas sentences in the end conclude or
-        summarize the document.
-        The positional value of a sentence is calculated by
-        assigning the highest score value to the first sentence and
-        the last sentence of the document. Second highest score
-        value is assigned to the second sentence from starting and
-        second last sentence of the document etc. - https://www.irjet.net/archives/V4/i5/IRJET-V4I5493.pdf
+        Run SentencePosition on the data to ensure model is run against the most important sentences in the articles.
+        Sentences in the beginning define the theme and sentences at the end conclude the document. Use this knowledge to calculate the positional value of each sentence.
     """
-
     def __init__(self, df):
         self.df = df
         self.main()
@@ -220,7 +208,7 @@ class SentencePosition():
 #TO DO
 class TFIDF():
     """
-        Run WordFrequency on the data to ensure model is run against the summaries that has the highest word frequency rank with the main article
+        Run TF-IDF metric on the data to ensure model is run against the summaries that has the highest word frequency rank with the main article
     """
     def __init__(self, df):
         self.df = df
@@ -239,7 +227,8 @@ class TFIDF():
 
     def compute_idf(self, doc_list):
         idf_dict = {}
-        N = len(doc_lit)
+        N = len(doc_list)
+
         
 #TO DO
 class PCA():

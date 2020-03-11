@@ -4,14 +4,14 @@
 ### Data Processing
 TRAIN_DATA_PATH="./cnn/originals"
 OUTPUT_CSV="./data/cnn-tr.csv"
-#TRAIN_DATA_PATH="/tmp/bhm699/dailymail/originals"
-#OUTPUT_CSV="/tmp/bhm699/dailymail-wf.csv"
+TRAIN_DATA_PATH_LABS="/tmp/bhm699/dailymail/originals"
+OUTPUT_CSV_LABS="/tmp/bhm699/dailymail-wf.csv"
 
 STOP_WORDS=True
 LEMMATIZE=True
 LEMMATIZE_WITH_POS=True
 #### Only one of these can be true at any given time
-TEXT_RANK=True
+TEXT_RANK=False
 WORD_FREQ=False
 SENT_POS=False
 
@@ -24,12 +24,21 @@ setup:
 	python setup.py install --user
 	python -m nltk.downloader stopwords wordnet punkt averaged_perceptron_tagger
 
+setup-labs: 
+	python3 setup.py install --user
+	python3 -m nltk.downloader stopwords wordnet punkt averaged_perceptron_tagger
+
 requirements:
 	pip install -r requirements.txt --user
 
 run-data:
 	python main.py 0 ${TRAIN_DATA_PATH} ${OUTPUT_CSV} ${STOP_WORDS} ${LEMMATIZE} ${LEMMATIZE_WITH_POS} ${TEXT_RANK} ${WORD_FREQ} ${SENT_POS}
 
+run-data-labs:
+	python3 main.py 0 ${TRAIN_DATA_PATH_LABS} ${OUTPUT_CSV_LABS} ${STOP_WORDS} ${LEMMATIZE} ${LEMMATIZE_WITH_POS} ${TEXT_RANK} ${WORD_FREQ} ${SENT_POS}
+
 run-model:
 	python main.py 1 ${MODEL_ID} ${WORD_REMOVAL}
 
+run-model-labs:
+	python3 main.py 1 ${MODEL_ID} ${WORD_REMOVAL}

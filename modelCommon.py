@@ -293,13 +293,13 @@ class Common():
                 print("-----")
                 generated_summary.append(summary)
                 if summary != "" :
-                    score = self.getRouge(str(summary), str(original))
+                    score = self.get_rouge(str(summary), str(original))
                     f_ov += float(score[0].get('rouge-1').get('f'))
                     p_ov += float(score[0].get('rouge-1').get('p'))
                     r_ov += float(score[0].get('rouge-1').get('r'))
         return f_ov, p_ov, r_ov
 
-    def getRouge(self, gt, pred):
+    def get_rouge(self, gt, pred):
         """ 
             Get rouge score for a given ground truth and prediction string
         """

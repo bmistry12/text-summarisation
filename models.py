@@ -96,7 +96,6 @@ class UniModel():
         decoder_outputs = decoder_dense(decoder_outputs)
 
         """#### Combined LSTM Model"""
-
         # Define the model
         model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
         print(model.summary())
@@ -150,7 +149,7 @@ class UniModel():
                     word_dict[word] += 1
         print(len(word_dict))
 
-        # #prepare a tokenizer for reviews on training data
+        # prepare a tokenizer for reviews on training data
         self.x_tokenizer = Tokenizer(num_words=len(word_dict), split=" ")
         self.x_tokenizer.fit_on_texts(list(self.X))
         # convert text sequences into integer sequences
@@ -210,7 +209,7 @@ class UniModel():
 
                 if summary != "":    
                     print("ROUGE score: ")
-                    score = self.common.getRouge(str(summary), str(original))
+                    score = self.common.get_rouge(str(summary), str(original))
                     print(score)
                     print(score[0].get('rouge-1').get('f'))
                     print(score[0].get('rouge-1').get('p'))
@@ -308,7 +307,6 @@ class BiModel():
         decoder_outputs = decoder_dense(decoder_outputs)
 
         """#### Combined LSTM Model"""
-
         # Define the model
         model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
         print(model.summary())
@@ -422,11 +420,6 @@ class BiModel():
             original = self.common.seq_to_text(self.y_tr[i], reverse_target_word_index, target_word_index, True)
 
             if (original !=""):
-                # # feed the first word of the original summary into the encoder (used for decode_seq3)
-                # a = nltk.word_tokenize(original)[0]
-                # for val,word in reverse_target_word_index.items():
-                #     if word == a:
-                #         i = val
                 print("Article: " + article)
                 print("Original summary:", original)
                 # reshape data into correct format for encoder (1, max_text_len)
@@ -437,7 +430,7 @@ class BiModel():
 
                 if summary != "":    
                     print("ROUGE score: ")
-                    score = self.common.getRouge(str(summary), str(original))
+                    score = self.common.get_rouge(str(summary), str(original))
                     print(score)
                     print(score[0].get('rouge-1').get('f'))
                     print(score[0].get('rouge-1').get('p'))
@@ -566,7 +559,6 @@ class GloveModel():
         decoder_outputs = decoder_dense(decoder_outputs)
 
         """#### Combined LSTM Model"""
-
         # Define the model
         model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
         print(model.summary())
@@ -618,7 +610,6 @@ class GloveModel():
                 embedding_index[word] = coefs
 
         print("Length of embeddings: " + str(len(embedding_index)))
-        print(embedding_index.get("us"))
 
         return embedding_index
 
@@ -645,7 +636,7 @@ class GloveModel():
                     word_dict[word] += 1
         print(len(word_dict))
 
-        # #prepare a tokenizer for reviews on training data
+        # prepare a tokenizer for reviews on training data
         self.x_tokenizer = Tokenizer(num_words=len(word_dict), split=" ")
         self.x_tokenizer.fit_on_texts(list(self.X))
 
@@ -708,7 +699,6 @@ class GloveModel():
         self.y_tr = pad_sequences(y_tr_seq, maxlen=self.y_voc, padding='post')
         self.y_val = pad_sequences(y_val_seq, maxlen=self.y_voc, padding='post')
         
-
         return x_embedding_matrix, y_embedding_matrix, word_dict, y_word_dict
 
     def evaluate_model(self, reverse_source_word_index, reverse_target_word_index, target_word_index, encoder_model, decoder_model, ev_val, ev_tr):
@@ -722,11 +712,6 @@ class GloveModel():
             original = self.common.seq_to_text(self.y_tr[i], reverse_target_word_index, target_word_index, True)
 
             if (original !=""):
-                # # feed the first word of the original summary into the encoder (used for decode_seq3)
-                # a = nltk.word_tokenize(original)[0]
-                # for val,word in reverse_target_word_index.items():
-                #     if word == a:
-                #         i = val
                 print("Article: " + article)
                 print("Original summary:", original)
                 # reshape data into correct format for encoder (1, max_text_len)
@@ -737,7 +722,7 @@ class GloveModel():
 
                 if summary != "":    
                     print("ROUGE score: ")
-                    score = self.common.getRouge(str(summary), str(original))
+                    score = self.common.get_rouge(str(summary), str(original))
                     print(score)
                     print(score[0].get('rouge-1').get('f'))
                     print(score[0].get('rouge-1').get('p'))

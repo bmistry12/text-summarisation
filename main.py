@@ -69,6 +69,7 @@ def data_processing():
                     exdp.SentencePosition(readwrite.get_df())
                     print("sentence position applied")
                 data = readwrite.get_df()
+                print(data['text'][0])
                 print(readwrite.get_df())
                 print("output to csv")
                 readwrite.df_to_csv(output_csv)

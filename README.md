@@ -1,18 +1,20 @@
-# Minimising the Universe.
-## Finding the Optimal Summary By Combining Extractive and Abstractive Summarization Methods.
+# Finding the Optimal Summary By Combining Extractive and Abstractive Summarization Methods.
 
-### Setup
-- Install required dependenices (required for first run)
+In modern-day society, we are surrounded by data, most of which is too long and laborious for the everyday person to read comprehensively. With the art of generating extractive summaries becoming increasingly trivial, the challenge of producing abstractive summaries that can understand and convey the meaning of a document remains prominent within the field of natural language processing. Although summarisation is a task that humans can easily complete, developing automated approaches that can generalise well with different data formats remains a challenge. Despite a recent surge in research to improve abstractive summarisation methods, there are still outstanding issues regarding the validity of generated summaries. The method proposed experiments with combining extractive and abstractive summarisation methods, to evaluate whether these extractive methods can be effective in driving more human-like abstractive summaries. The overall aims and evaluators are the reduction of repetition, and the improvement of precision, recall and human-judged grammatical correctness.
+
+## Setup
+- This project requires Python 3.0+ to run.
+- Install required dependencies (required for first run to ensure NLTK packages are installed)
     ```
     make setup 
     ```
 - Install required python packages 
-    </br> *only run if requirements have changed since make setup has been run  + no new nltk packages are required to be installed*
+    </br> *only run if requirements have changed since make setup has been run  + no new NLTK packages are required to be installed*
     ```
-    pip install -r requirements.txt
+    make requirements
     ```
 
-### Run
+## Run
 - To run data processing with default settings
     ```
     make run-data
@@ -23,17 +25,71 @@
     ```
 - To alter runtime variables follow the following method
     ```
-    make run-data TRAIN_DATA_PATH=<> OUTPUT_CSV=<>
+    make run-data TRAIN_DATA_PATH=<> OUTPUT_CSV=<> ...
     ```
 
-### Proposal
-In modern-day society, so much data available to us, and most of it is too long and laborious for the everyday person to read. Summaries have always proven to be the easiest and most practical method of allowing readers to understand aspects of documents. The appeal for a system that enables anyone to input text of any: size, format, or structure, and receive concise, well-structured summaries is valuable. 
-Over the past few years, a lot of text summarization algorithms have been implemented, with average performing extractive methods becoming trivial to implement. The main challenges with these methods are creating summaries that effectively convey the whole message in a human-like way. With the rise of deep learning, recurrent neural networks have been instrumental in driving abstractive based method, however there are still issues surrounding reproducing factual details and ensuring lack of repetition.  
-As a consequence of discoviring this, I have chosen to experiment with the effect of combining abstractive and extractve methodologies.
-I am looking to build a Sequence2Sequence based Recurrent Neural Network (RNN), in order to create a model capable of abstractive text summarization. To enhance the model, I will experiment with adding in a group of traditionally extractive summarization based methods, such as TextRank and Ontology-based classification, to see how they impact the models’ overall performance, particularly when dealing with different types of data (e.g. academic papers rather than news articles).
-The most challenging part of this will be to create an initial machine learning model that can be easily adapted to accommodate for the introduction of these extractive 'modules'. Additionally, checking the minimised form of the text is grammatically and human-friendly will be quite challenging.
+*Note: For any machine running python 3.0 via the python3 command, append -labs to the end of any make commands (e.g. make-setup-labs)*
 
-### Project Plan
+## MakeFile
+The default settings for all runtime variables that can be altered are shown below.
+```
+    ## Variables
+    ### Data Processing
+    TRAIN_DATA_PATH="./cnn/originals"
+    OUTPUT_CSV="./data/cnn-tr.csv"
+    TRAIN_DATA_PATH_LABS="/tmp/bhm699/dailymail/originals"
+    OUTPUT_CSV_LABS="/tmp/bhm699/dailymail-wf.csv"
+
+    STOP_WORDS=True
+    LEMMATIZE=True
+    LEMMATIZE_WITH_POS=True
+    #### Only one of these can be true at any given time
+    TEXT_RANK=False
+    WORD_FREQ=False
+    SENT_POS=False
+
+    ### Model Running
+    MODEL_ID=1  # 0 = unidirectional, 1=bidirectional, 2=GloVe model
+    WORD_REMOVAL=False # remove words using uncommon_word_thr
+```
+
+ 
+
+## Flow
+- dataProcesing.py
+    - Read in Data
+    - Clean Data
+        - Stop Word Removal
+        - POS
+        - Lemmatization
+    - Extractive Methods
+      - TextRank?
+      - Word Frequency?
+      - Sentence Position?
+  - Write Dataframme to CSV
+- modelCommon.py and models.py
+  - Read CSV into Dataframe
+  - Data Cleaning
+  - Uncommon Word Removal?
+  - Max Text Lengths
+  - Training Validation Split
+  - Word Embeddings  
+    - Reshape Data  
+    - Learning Model
+      - Encoder
+      - Decoder
+      - Combined LSTM Model
+      - Training
+    - Inference Model
+      - Encoder
+      - Decoder
+      - Reverse Word Embeddings
+    - Evaluation
+      - Validation Data
+      - Training Data
+      - Test Data
+
+## Project Plan
 
 ```mermaid
 gantt
@@ -42,7 +98,7 @@ title Projet Timeline Plan
 
 
 section Planning
-Literature Reading                      :active,  des1, 2019-10-13, 2019-10-26
+Literature Reading                      :done,  des1, 2019-10-13, 2019-10-26
 Project Proposal                        :done,    des1, 2019-10-20, 2019-10-22
 Preliminary Project Plan                :done,    des1, 2019-10-13, 2019-10-21
 
@@ -72,19 +128,19 @@ Experimenting with WordEmbeddings       :done,    des1, 2020-01-15, 2020-01-22
 Experimenting with TextRank             :done,    des1, 2020-01-22, 2020-01-26
 Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
 Ontology Based Classification           :         des1, 2020-02-02, 2020-02-13
-Adding in some more Extractive methods  :active,  des1, 2020-02-05, 2020-02-20
+Adding in some more Extractive methods  :done,  des1, 2020-02-05, 2020-02-20
 Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19
 Experimenting with Word Frequency        :done,         des1, 2020-02-05, 2020-02-08
 Experimenting with Grammar based methods:         des1, 2020-02-09, 2020-02-15
-Testing the model with different data   :active,  des1, 2020-02-15, 2020-02-20 
-Front End Implementation                :         des1, 2020-02-20, 2020-02-28
+Testing the model with different data   :done,  des1, 2020-02-15, 2020-02-20 
+Experimenting with Stop Word            :         des1, 2020-02-20, 2020-02-28
 Experimental Features Coding Completion :         des1, 2020-02-29, 1d
 
 Section Finalising
-Project Refractoring                    :active,  des1, 2020-03-01, 2020-03-08
+Project Refractoring                    :done,  des1, 2020-03-01, 2020-03-08
 Documentation                           :active,  des1, 2020-03-10, 2020-03-21
-Demo Week                               :         des1, 2020-03-03, 2020-03-21
-Tweaks Based On Feedback                :         des1, 2020-03-21, 2020-03-26
+Demo Week                               :done,    des1, 2020-03-02, 2020-03-06
+Tweaks Based On Feedback                :active,  des1, 2020-03-07, 2020-03-26
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
 
@@ -116,51 +172,28 @@ Setup Full Working Flow                 :done,    des1, 2019-11-14, 2019-11-24
 Improving/Fixing the Model              :done,    des1, 2019-11-25, 2019-12-03
 Evaluation Method                       :done,    des1, 2019-11-23, 2019-12-29
 Project Inspection                      :done,    des1, 2019-12-11, 1d
-Working Prototype                       :done,    des1, 2019-12-13, 2019-12-06
+Working Prototype                       :done,    des1, 2019-12-06, 2019-12-13
+Bug Fixing                              :done,    des1, 2019-12-16, 2020-02-20
 Bidirectional Model                     :done,    des1, 2020-01-03, 2020-01-04
 End Of Semester 1                       :         des1, 2019-12-13, 1d
 
 section Project Semester 2
 Start of Semester 2                     :         des1, 2020-01-13, 1d
 Experimenting with WordEmbeddings       :done,    des1, 2020-01-13, 2020-01-26
-K-Folds Cross Validation Algorithm      :         des1, 2020-01-13, 2020-01-16
-Ontology Based Classification           :         des1, 2020-01-16, 2020-01-20
-Experimenting with TextRank             :done,  des1, 2020-02-02, 2020-02-03
-Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
+Hyperparameter Testing                  :done,    des1, 2020-02-20, 2020-02-22
+Experimenting with TextRank             :done,    des1, 2020-02-02, 2020-03-06
 Adding in some more Extractive methods  :active,  des1, 2020-02-05, 2020-02-20
-Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19
-Experimenting with Word Frequency        :done,         des1, 2020-02-20, 2020-02-22
-Experimenting with Grammar based methods:active,   des1, 2020-02-20, 2020-02-22
-Testing the model with different data   :active,  des1, 2020-02-15, 2020-02-26 
-Front End Implementation                :         des1, 2020-02-20, 2020-02-28
-Experimental Features Coding Completion :         des1, 2020-02-29, 1d
+Experimenting with Word Frequency       :done,    des1, 2020-02-20, 2020-02-22
+Experimenting with Sentence Position    :done,    des1, 2020-02-20, 2020-02-25
+Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
+Pre Trained Word Embeddings             :active   des1, 2020-02-28, 2020-03-15
+Testing the model with different data   :done,    des1, 2020-02-15, 2020-03-15
+Experimental Features Coding Completion :done,    des1, 2020-02-29, 1d
 
 Section Finalising
-Project Refractoring                    :done,  des1, 2020-02-20, 2020-02-23
-Documentation                           :active,  des1, 2020-02-15, 2020-03-21
-Demo Week                               :         des1, 2020-03-02, 2020-03-06
-Tweaks Based On Feedback                :         des1, 2020-03-06, 2020-03-10
+Project Refractoring                    :done,    des1, 2020-02-20, 2020-02-23
+Documentation                           :active,  des1, 2020-02-15, 2020-03-26
+Demo                                    :done,    des1, 2020-03-02, 2020-03-04
+Tweaks Based On Feedback                :done,    des1, 2020-03-05, 2020-03-06
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
-
-### Flow
-
-- Data processing
-    - Read in data
-    - Clean data
-        - Stop Word Removal
-        - POS
-        - Lemmatization
-    - Extractive Methods
-      - TextRank?
-      - Word Frequency?
-    - Reshape data    
-- Write dataframe to CSV
-- Read CSV into model
-- Model 
-    - word embeddings
-    - encoder
-    - decoder
-    - inference model
-    - evaluation
-

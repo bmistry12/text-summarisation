@@ -53,8 +53,6 @@ The default settings for all runtime variables that can be altered are shown bel
     WORD_REMOVAL=False # remove words using uncommon_word_thr
 ```
 
- 
-
 ## Flow
 - dataProcesing.py
     - Read in Data
@@ -96,9 +94,8 @@ gantt
 dateFormat  YYYY-MM-DD
 title Projet Timeline Plan
 
-
 section Planning
-Literature Reading                      :done,  des1, 2019-10-13, 2019-10-26
+Literature Reading                      :done,    des1, 2019-10-13, 2019-10-26
 Project Proposal                        :done,    des1, 2019-10-20, 2019-10-22
 Preliminary Project Plan                :done,    des1, 2019-10-13, 2019-10-21
 
@@ -117,9 +114,9 @@ Setup Full Working Flow                 :done,    des1, 2019-11-11, 2019-11-24
 K-Folds Cross Validation Algorithm      :         des1, 2019-11-18, 2019-11-25
 Evaluation Method                       :done,    des1, 2019-11-15, 2019-11-25
 Improving/Fixing the Model              :done,    des1, 2019-11-20, 2019-12-13
-Inspection Week                         :done,    des1, 2019-12-13, 2019-12-06
-Bidirectional Model                     :done,    des1, 2019-12-08, 2019-12-03
-Working Prototype                       :done,    des1, 2019-12-13, 2019-12-06
+Inspection Week                         :done,    des1, 2019-12-06, 2019-12-13
+Bidirectional Model                     :done,    des1, 2019-12-03, 2019-12-08
+Working Prototype                       :done,    des1, 2019-12-06, 2019-12-13
 End Of Semester 1                       :         des1, 2019-12-13, 1d
 
 section Project Semester 2
@@ -128,19 +125,20 @@ Experimenting with WordEmbeddings       :done,    des1, 2020-01-15, 2020-01-22
 Experimenting with TextRank             :done,    des1, 2020-01-22, 2020-01-26
 Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
 Ontology Based Classification           :         des1, 2020-02-02, 2020-02-13
-Adding in some more Extractive methods  :done,  des1, 2020-02-05, 2020-02-20
-Experimenting with N-Words              :         des1, 2020-02-13, 2020-02-19
-Experimenting with Word Frequency        :done,         des1, 2020-02-05, 2020-02-08
-Experimenting with Grammar based methods:         des1, 2020-02-09, 2020-02-15
-Testing the model with different data   :done,  des1, 2020-02-15, 2020-02-20 
+Adding in some more Extractive methods  :done,    des1, 2020-02-05, 2020-02-20
+Experimenting with N-Words              :         des1, 2020-02-05, 2020-02-10
+Experimenting with Word Frequency       :done,    des1, 2020-02-010, 2020-02-12
+Experimenting with Grammar based methods:         des1, 2020-02-12, 2020-02-15
+Testing the model with different data   :done,    des1, 2020-02-15, 2020-02-20 
 Experimenting with Stop Word            :         des1, 2020-02-20, 2020-02-28
 Experimental Features Coding Completion :         des1, 2020-02-29, 1d
 
 Section Finalising
-Project Refractoring                    :done,  des1, 2020-03-01, 2020-03-08
+Project Refractoring                    :done,    des1, 2020-03-01, 2020-03-08
 Documentation                           :active,  des1, 2020-03-10, 2020-03-21
+First Draft Completed                   :done,    des1, 2020-02-16, 1d
 Demo Week                               :done,    des1, 2020-03-02, 2020-03-06
-Tweaks Based On Feedback                :active,  des1, 2020-03-07, 2020-03-26
+Tweaks Based On Feedback                :done,    des1, 2020-03-07, 2020-03-26
 Submission Deadline                     :         des1, 2020-03-27, 1d
 ```
 
@@ -182,17 +180,18 @@ Start of Semester 2                     :         des1, 2020-01-13, 1d
 Experimenting with WordEmbeddings       :done,    des1, 2020-01-13, 2020-01-26
 Hyperparameter Testing                  :done,    des1, 2020-02-20, 2020-02-22
 Experimenting with TextRank             :done,    des1, 2020-02-02, 2020-03-06
-Adding in some more Extractive methods  :active,  des1, 2020-02-05, 2020-02-20
+Adding in some more Extractive methods  :done,    des1, 2020-02-05, 2020-02-20
 Experimenting with Word Frequency       :done,    des1, 2020-02-20, 2020-02-22
 Experimenting with Sentence Position    :done,    des1, 2020-02-20, 2020-02-25
-Experimenting with Attention Mechanisms :         des1, 2020-01-28, 2020-02-04
 Pre Trained Word Embeddings             :active   des1, 2020-02-28, 2020-03-15
-Testing the model with different data   :done,    des1, 2020-02-15, 2020-03-15
+Experimenting with Attention Mechanisms :active,  des1, 2020-03-13, 2020-03-16
+Testing the model with different data   :done,    des1, 2020-02-15, 2020-03-16
 Experimental Features Coding Completion :done,    des1, 2020-02-29, 1d
 
 Section Finalising
 Project Refractoring                    :done,    des1, 2020-02-20, 2020-02-23
 Documentation                           :active,  des1, 2020-02-15, 2020-03-26
+First Draft Completed                   :done,    des1, 2020-02-16, 1d
 Demo                                    :done,    des1, 2020-03-02, 2020-03-04
 Tweaks Based On Feedback                :done,    des1, 2020-03-05, 2020-03-06
 Submission Deadline                     :         des1, 2020-03-27, 1d

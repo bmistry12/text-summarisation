@@ -5,20 +5,16 @@ dist/
 __pycache__/
 *.pyc
 functions.cpython*
+/final_year_project*
 
 # Jupyter Notebook
 .ipynb_checkpoints
 
 ### Data Files ###
 /cnn
-/cnn_small
-*.csv
 /model
 /data
 /glove
 /dailymail
-/final_year_project*
 *.log
-
-### Notes ###
-NOTES*
+*.csv

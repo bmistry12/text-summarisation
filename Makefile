@@ -10,14 +10,15 @@ OUTPUT_CSV_LABS="/tmp/bhm699/dailymail-wf.csv"
 STOP_WORDS=True
 LEMMATIZE=True
 LEMMATIZE_WITH_POS=True
+SENT_POS=False
 #### Only one of these can be true at any given time
 TEXT_RANK=False
 WORD_FREQ=False
-SENT_POS=False
 
 ### Model Running
 MODEL_ID=1  # 0 = unidirectional, 1=bidirectional, 2=GloVe model
 WORD_REMOVAL=False # remove words using uncommon_word_thr
+CSV_NAME="cnn-all.csv" # csv data to run model against
 
 ## Commands
 setup: 
@@ -38,7 +39,10 @@ run-data-labs:
 	python3 main.py 0 ${TRAIN_DATA_PATH_LABS} ${OUTPUT_CSV_LABS} ${STOP_WORDS} ${LEMMATIZE} ${LEMMATIZE_WITH_POS} ${TEXT_RANK} ${WORD_FREQ} ${SENT_POS}
 
 run-model:
-	python main.py 1 ${MODEL_ID} ${WORD_REMOVAL}
+	# make model directory if it doesnt already exist
+	# check either text rank or word freq
+	python main.py 1 ${MODEL_ID} ${WORD_REMOVAL} ${CSV_NAME}
 
 run-model-labs:
-	python3 main.py 1 ${MODEL_ID} ${WORD_REMOVAL}
+	# make model directory if it doesnt already exist
+	python3 main.py 1 ${MODEL_ID} ${WORD_REMOVAL} ${CSV_NAME}

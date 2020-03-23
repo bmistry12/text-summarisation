@@ -82,19 +82,26 @@ def data_processing():
         print("Error running data processing : " + str(e))
 
 def model():
+    """
+        Main script for all model runs - arguments are taken from command line via main() method
+        @arg2 = model to run, 0=uni,1=bi,2=glove
+        @arg3 = uncommon word removal boolean
+        @arg4 = CSV to run model on
+    """
     try:
         model_id = sys.argv[2] 
         word_removal = sys.argv[3] # uncommon word removal boolean
+        csv_name = sys.argv[4]
         print(model_id)
         if model_id == "0":
             # unidirectional model
-            models.UniModel(word_removal)
+            models.UniModel(word_removal, csv_name)
         elif model_id == "1":
             # bidirectional model
-            models.BiModel(word_removal)
+            models.BiModel(word_removal, csv_name)
         elif model_id == "2":
             # glove model
-            models.GloveModel(word_removal)
+            models.GloveModel(word_removal, csv_name)
         else:
             raise Exception("This is not a valid model id - use 0 for unidirectional, 1 for bidirectional and 2 for glove")
     except Exception as e:
@@ -105,7 +112,7 @@ if __name__ == "__main__":
         @arg1 = data_or_model, 0=dataprocessing, 1=model
         @arg2 = training data path OR model to run, 0=uni,1=bi,2=glove
         @arg3 = output csv OR uncommon word removal boolean
-        @arg4 = remove stop words
+        @arg4 = remove stop words OR CSV name
         @arg5 = lemmatize
         @arg6 = lemmatize with part of speech
         @arg7 = run text rank

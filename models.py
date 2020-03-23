@@ -14,8 +14,8 @@ from keras.layers import Input, LSTM, Embedding, Dense, Concatenate, Bidirection
 import modelCommon as modelCommon
 
 class UniModel():
-    def __init__(self, word_removal):
-        self.common = modelCommon.Common()
+    def __init__(self, word_removal, csv_name):
+        self.common = modelCommon.Common(csv_name)
         self.main(word_removal)
 
     def main(self, word_removal):
@@ -187,6 +187,8 @@ class UniModel():
         # size of vocabulary + 1 for padding
         self.y_voc = self.y_tokenizer.num_words + 1
         print(self.y_voc)
+        print("Number of start and end tokens: ")
+        print(self.y_tokenizer.word_counts['sostok'], self.y_tokenizer.word_counts['eostok'])
 
         # save tokenizers
         with open('xtokenizer_uni.pickle', 'wb') as handle:
@@ -217,8 +219,8 @@ class UniModel():
 
 
 class BiModel():
-    def __init__(self, word_removal):
-        self.common = modelCommon.Common()
+    def __init__(self, word_removal, csv_name):
+        self.common = modelCommon.Common(csv_name)
         self.main(word_removal)
 
     def main(self, word_removal):
@@ -454,8 +456,8 @@ class BiModel():
             
 
 class GloveModel():
-    def __init__(self, word_removal):
-        self.common = modelCommon.Common()
+    def __init__(self, word_removal, csv_name):
+        self.common = modelCommon.Common(csv_name)
         self.main(word_removal)
 
     def main(self, word_removal):
@@ -694,6 +696,8 @@ class GloveModel():
         # size of vocabulary + 1 for padding
         self.y_voc = self.y_tokenizer.num_words + 1
         print(self.y_voc)
+        print("Number of start and end tokens: ")
+        print(self.y_tokenizer.word_counts['sostok'], self.y_tokenizer.word_counts['eostok'])
 
         # padding zero upto maximum length
         self.y_tr = pad_sequences(y_tr_seq, maxlen=self.y_voc, padding='post')

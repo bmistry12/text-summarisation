@@ -9,7 +9,7 @@ from nltk.corpus import wordnet as wn
 from sklearn.model_selection import train_test_split
 
 class Common():
-    def __init__(self):
+    def __init__(self, csv_name):
         # Set Hyperparameters
         self.PATH = ""
         self.BATCH_SIZE = 40
@@ -18,7 +18,7 @@ class Common():
         self.EMBEDDING_DIM = 128
         self.TEST_TRAIN_SPLIT = 0.15
         self.LEARNING_RATE = 0.005
-        self.FILE_NAME = "all.csv" # csv data to run model against
+        self.FILE_NAME = csv_name # csv data to run model against
         self.MAX_TEXT_LEN = 100
         self.MAX_SUMMARY_LEN = 20
         self.UNCOMMON_WORD_THRESHOLD = 0 # only matters in UNCOMMON_WORDS is set
@@ -207,36 +207,6 @@ class Common():
                 if((i!=0 and i!=target_word_index['sostok']) and i!=target_word_index['eostok']):
                     textString = textString + ' ' + reverse_word_index[i]
         return textString
-
-    # def decode_sequence(self, input_seq, encoder_model, decoder_model, reverse_target_word_index, y_voc): 
-    #     """
-    #         Standard Decode Sequence Method - selects most probable word using argmax
-    #     """
-    #     # Encode the input as state vectors.
-    #     e_out, e_h, e_c = encoder_model.predict(input_seq)
-    #     target_seq = np.zeros((1, y_voc))
-    #     stop_condition = False
-    #     decoded_sentence = ''
-
-    #     while not stop_condition:
-    #         # Model([decoder_inputs] + decoder_state_inputs, [decoder_outputs2] + decoder_states)
-    #         output_tokens, h, c = decoder_model.predict([target_seq] + [e_out, e_h, e_c]) 
-    #         sampled_token_index = np.argmax(output_tokens[0, -1, :][1:])
-    #         # print(output_tokens[0, -1, :].shape) (y_voc, None)
-    #         if (sampled_token_index != 0 ):
-    #             sampled_token = reverse_target_word_index[sampled_token_index]
-    #             decoded_sentence += ' '+sampled_token
-    #         else :
-    #             print("sadface")
-    #             stop_condition = True
-    #         if (len(decoded_sentence.split()) >= (self.MAX_SUMMARY_LEN-1)):
-    #                 stop_condition = True
-    #         # Update the target sequence for next input
-    #         target_seq = np.zeros((1, y_voc))
-    #         target_seq[0, sampled_token_index] = 1
-    #         # Update internal states
-    #         e_h, e_c = h, c
-    #     return decoded_sentence
     
     def decode_sequence(self, input_seq, encoder_model, decoder_model, reverse_target_word_index, target_word_index):
         """

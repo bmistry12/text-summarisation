@@ -13,17 +13,18 @@ In modern-day society, we are surrounded by data, most of which is too long and 
     ```
     make requirements
     ```
+- To run the GloVe model, download the pretrained word embeddings found [here](https://nlp.stanford.edu/projects/glove/) and ensure they are place on the specified path in a file named "glove".
 
 ## Run
-- To run data processing with default settings
+- To run data processing with default settings (as shown below)
     ```
     make run-data
     ```
-- To run model with default settings
+- To run model with default settings - bidirectional model
     ```
     make run-model
     ```
-- To alter runtime variables follow the following method
+- To alter runtime variables follow the following example
     ```
     make run-data TRAIN_DATA_PATH=<> OUTPUT_CSV=<> ...
     ```
@@ -43,14 +44,15 @@ The default settings for all runtime variables that can be altered are shown bel
     STOP_WORDS=True
     LEMMATIZE=True
     LEMMATIZE_WITH_POS=True
+    SENT_POS=False
     #### Only one of these can be true at any given time
     TEXT_RANK=False
     WORD_FREQ=False
-    SENT_POS=False
 
     ### Model Running
     MODEL_ID=1  # 0 = unidirectional, 1=bidirectional, 2=GloVe model
     WORD_REMOVAL=False # remove words using uncommon_word_thr
+    CSV_NAME="cnn-all.csv" # csv data to run model against
 ```
 
 ## Flow
@@ -130,12 +132,12 @@ Experimenting with N-Words              :         des1, 2020-02-05, 2020-02-10
 Experimenting with Word Frequency       :done,    des1, 2020-02-010, 2020-02-12
 Experimenting with Grammar based methods:         des1, 2020-02-12, 2020-02-15
 Testing the model with different data   :done,    des1, 2020-02-15, 2020-02-20 
-Experimenting with Stop Word            :         des1, 2020-02-20, 2020-02-28
-Experimental Features Coding Completion :         des1, 2020-02-29, 1d
+Experimenting with Stop Word            :done,    des1, 2020-02-20, 2020-02-28
+Experimental Features Coding Completion :done,    des1, 2020-02-29, 1d
 
 Section Finalising
 Project Refractoring                    :done,    des1, 2020-03-01, 2020-03-08
-Documentation                           :active,  des1, 2020-03-10, 2020-03-21
+Documentation                           :active,  des1, 2020-03-10, 2020-03-26
 First Draft Completed                   :done,    des1, 2020-02-16, 1d
 Demo Week                               :done,    des1, 2020-03-02, 2020-03-06
 Tweaks Based On Feedback                :done,    des1, 2020-03-07, 2020-03-26
@@ -150,7 +152,7 @@ dateFormat  YYYY-MM-DD
 title Projet Outcome Timeline
 
 section Planning
-Literature Reading                      :active,  des1, 2019-10-13, 2019-10-26
+Literature Reading                      :done,    des1, 2019-10-13, 2019-10-26
 Project Proposal                        :done,    des1, 2019-10-20, 2019-10-22
 Preliminary Project Plan                :done,    des1, 2019-10-13, 2019-10-21
 
@@ -179,12 +181,10 @@ section Project Semester 2
 Start of Semester 2                     :         des1, 2020-01-13, 1d
 Experimenting with WordEmbeddings       :done,    des1, 2020-01-13, 2020-01-26
 Hyperparameter Testing                  :done,    des1, 2020-02-20, 2020-02-22
-Experimenting with TextRank             :done,    des1, 2020-02-02, 2020-03-06
+Experimenting with TextRank             :done,    des1, 2020-02-02, 2020-03-25
 Adding in some more Extractive methods  :done,    des1, 2020-02-05, 2020-02-20
 Experimenting with Word Frequency       :done,    des1, 2020-02-20, 2020-02-22
 Experimenting with Sentence Position    :done,    des1, 2020-02-20, 2020-02-25
-Pre Trained Word Embeddings             :active   des1, 2020-02-28, 2020-03-15
-Experimenting with Attention Mechanisms :active,  des1, 2020-03-13, 2020-03-16
 Testing the model with different data   :done,    des1, 2020-02-15, 2020-03-16
 Experimental Features Coding Completion :done,    des1, 2020-02-29, 1d
 
@@ -195,4 +195,5 @@ First Draft Completed                   :done,    des1, 2020-02-16, 1d
 Demo                                    :done,    des1, 2020-03-02, 2020-03-04
 Tweaks Based On Feedback                :done,    des1, 2020-03-05, 2020-03-06
 Submission Deadline                     :         des1, 2020-03-27, 1d
+New Submission Deadline                 :         des1, 2020-04-10, 1d
 ```

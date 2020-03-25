@@ -31,6 +31,8 @@ In modern-day society, we are surrounded by data, most of which is too long and 
 
 *Note: For any machine running python 3.0 via the python3 command, append -labs to the end of any make commands (e.g. make-setup-labs)*
 
+The models can also be run as Jupyter Notebooks (found in the ./notebooks directory.). To do this you must have [Jupyter](https://jupyter.org/) installed.
+
 ## MakeFile
 The default settings for all runtime variables that can be altered are shown below.
 ```

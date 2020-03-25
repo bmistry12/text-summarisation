@@ -4,11 +4,10 @@ from setuptools import setup
 setup(
     name='final-year-project',
     version='1.0',
-    description='text summarization',
+    description='abstractive text summarization',
 	long_description=open('README.md').read(),
-    author='bmistry12',
-    # python_requires='3.5.0',
+    author='bhm699',
     py_modules=['main'],
-    install_requires=['numpy', 'pandas', 'sklearn', 'keras', 'matplotlib', 'jupyterlab', 'rouge', ' networkx'],
+    install_requires=['numpy', 'pandas', 'sklearn', 'keras', 'matplotlib', 'rouge', ' networkx'],
     include_package_data=True,
 )

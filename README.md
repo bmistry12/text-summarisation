@@ -4,7 +4,7 @@ In modern-day society, we are surrounded by data, most of which is too long and 
 
 ## Setup
 - This project requires Python 3.0+ to run.
-- Install required dependencies (required for first run to ensure NLTK packages are installed)
+- Install required dependencies (needed for the first run to ensure NLTK packages are installed)
     ```
     make setup 
     ```
@@ -13,14 +13,14 @@ In modern-day society, we are surrounded by data, most of which is too long and 
     ```
     make requirements
     ```
-- To run the GloVe model, download the pretrained word embeddings found [here](https://nlp.stanford.edu/projects/glove/) and ensure they are place on the specified path in a file named **"glove"**.
+- To run the GloVe model, download the pre-trained word embeddings found [here](https://nlp.stanford.edu/projects/glove/) and ensure they are placed on the specified path in a file named **"glove"**.
 
 ## Run
 - To run data processing with default settings (as shown below)
     ```
     make run-data
     ```
-- To run model with default settings - bidirectional model
+- To run the model with default settings - bidirectional model
     ```
     make run-model
     ```
@@ -32,7 +32,7 @@ In modern-day society, we are surrounded by data, most of which is too long and 
 
 *Note: For any machine running python 3.0 via the python3 command, append -labs to the end of any make commands (e.g. make-setup-labs)*
 
-The models can also be run as Jupyter Notebooks (found in the ./notebooks directory.). To do this you must have [Jupyter](https://jupyter.org/) installed.
+The models can also be run as Jupyter Notebooks (found in the ./notebooks directory.). To do this, you must have [Jupyter](https://jupyter.org/) installed.
 
 ## MakeFile
 The default settings for all runtime variables that can be altered are shown below.
@@ -57,6 +57,10 @@ The default settings for all runtime variables that can be altered are shown bel
     WORD_REMOVAL=False # remove words using uncommon_word_thr
     CSV_NAME="cnn-all.csv" # csv data to run model against
 ```
+## Notebooks
+There are three notebooks for this project: bi_model.ipynb  glove_model.ipynb  uni_model.ipynb. <br>
+Each notebook contains the exact same code as the relevant class in models.py and the shared methods in modelCommon.py. <br>
+As with the python scripts, the required hyperparameters, packages, and directories are required in order to run these.
 
 ## Flow
 - dataProcesing.py
@@ -152,7 +156,7 @@ Submission Deadline                     :         des1, 2020-03-27, 1d
 ```mermaid
 gantt
 dateFormat  YYYY-MM-DD
-title Projet Outcome Timeline
+title Project Outcome Timeline
 
 section Planning
 Literature Reading                      :done,    des1, 2019-10-13, 2019-10-26

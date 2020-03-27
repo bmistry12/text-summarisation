@@ -44,24 +44,19 @@ class TextRank():
                        for i, sent in enumerate(summary_split)]
         sent_scores = sorted(sent_scores, reverse=True)
         chosen_summary = sent_scores[0][1]
-        print(chosen_summary)
         return(chosen_summary)
 
     def get_similarity_matrix(self, sentence_vectors):
-        print("get sun mat")
         sim_matrix = np.zeros([len(sentence_vectors), len(sentence_vectors)])
         # CSim(d1,d2) = cos(x) - use cosine similarity
         for i, d1 in enumerate(sentence_vectors):
             for j, d2 in enumerate(sentence_vectors):
                 if i != j:
-                    print(cosine_similarity(
-                        d1.reshape(1, 100), d2.reshape(1, 100)))
                     sim_matrix[i][j] = cosine_similarity(
                         d1.reshape(1, 100), d2.reshape(1, 100))
         return sim_matrix
 
     def get_graph(self, sim_matrix):
-        print(sim_matrix.shape)
         nx_graph = nx.from_numpy_array(sim_matrix)
         try:
             # limit to 50 iterations to speed up processing
@@ -101,7 +96,6 @@ class WordFrequency():
         # get sentence scores for each summary
         self.sent_pos = 0 # this is a hack for getting the correct article for each summary
         sentence_scores = [self.score_sentences(summary, texts) for summary in summaries]
-        print("Sentence Scores")
         # sentence scores = [("sentence1", value1) ... ("sentecex", valuex)]
         self.df['summary'] = [self.get_best_summary(sentences) for sentences in sentence_scores]
 
@@ -177,14 +171,11 @@ class SentencePosition():
         self.main()
     
     def main(self):
-        print("Sentence Scores")
         texts = self.df['text']
         new_texts = [self.sentence_ranker(text) for text in texts]
         self.df['text'] = new_texts
-        print(self.df['text'].head())
 
     def sentence_ranker(self, article):  
-        print("Sentence ranker")
         max_rank = 5 # we only care about the first and last five sentence.
         # split by <eos> token added in sent_pos_cleaner
         sentences = article.split("< eos >")
@@ -204,45 +195,3 @@ class SentencePosition():
                     sent_with_rank[sentence] = max_rank - (len_sent - i) + 1
         # return the new article joined together
         return "".join(sent_with_rank.keys())
-
-#TO DO
-class TFIDF():
-    """
-        Run TF-IDF metric on the data to ensure model is run against the summaries that has the highest word frequency rank with the main article
-    """
-    def __init__(self, df):
-        self.df = df
-        self.main()
-
-    def main(self):
-        texts = self.df['text']
-        summaries = self.df['summary']
-       
-    def compute_tf(self, word_dict, doc):
-        tf_dict = {}
-        doc_len = len(doc)
-        for word, count in word_dict.items():
-            tf_dict[word]  = count / float(doc_len)
-        return tf_dict
-
-    def compute_idf(self, doc_list):
-        idf_dict = {}
-        N = len(doc_list)
-
-        
-#TO DO
-class PCA():
-    pass
-#TO DO
-class OntologyClassification():
-    pass
-#TO DO
-class Coverage():
-    pass
-#TO DO
-class NWords():
-    pass
-#TO DO
-class StopWords():
-    # corpus generated stop words
-    pass

@@ -3,9 +3,9 @@
 ## Variables
 ### Data Processing
 TRAIN_DATA_PATH="./cnn/originals"
-OUTPUT_CSV="./data/cnn-tr.csv"
-TRAIN_DATA_PATH_LABS="/tmp/bhm699/dailymail/originals"
-OUTPUT_CSV_LABS="/tmp/bhm699/dailymail-wf.csv"
+OUTPUT_CSV="./data/cnn-all.csv"
+TRAIN_DATA_PATH_LABS="/tmp/bhm699/cnn/originals"
+OUTPUT_CSV_LABS="/tmp/bhm699/cnn-all.csv"
 
 STOP_WORDS=True
 LEMMATIZE=True
@@ -39,10 +39,7 @@ run-data-labs:
 	python3 main.py 0 ${TRAIN_DATA_PATH_LABS} ${OUTPUT_CSV_LABS} ${STOP_WORDS} ${LEMMATIZE} ${LEMMATIZE_WITH_POS} ${TEXT_RANK} ${WORD_FREQ} ${SENT_POS}
 
 run-model:
-	# make model directory if it doesnt already exist
-	# check either text rank or word freq
 	python main.py 1 ${MODEL_ID} ${WORD_REMOVAL} ${CSV_NAME}
 
 run-model-labs:
-	# make model directory if it doesnt already exist
 	python3 main.py 1 ${MODEL_ID} ${WORD_REMOVAL} ${CSV_NAME}

@@ -7,7 +7,7 @@ import dataProcessing as process
 def data_processing():
     """
         Main script for all data processing - arguments are taken from command line via main() method
-        Note: you should only have one of arg7 onwards as True.
+        Note: you should only one of arg7 and arg8 should be true
         @arg2 = training data path
         @arg3 = output csv for procesed data
         @arg4 = remove stop words?
@@ -93,6 +93,11 @@ def model():
         word_removal = sys.argv[3] # uncommon word removal boolean
         csv_name = sys.argv[4]
         print(model_id)
+        # make the models directory for saving model checkpoints if it doesnt already exist
+        mode = 0o755
+        if not os.path.isdir("model"):
+            os.mkdir("model", mode)
+        # select model to run
         if model_id == "0":
             # unidirectional model
             models.UniModel(word_removal, csv_name)
@@ -122,7 +127,6 @@ if __name__ == "__main__":
     try:
         data_or_model = sys.argv[1]
         if data_or_model == "0":
-            print("data processing")
             data_processing()
         elif data_or_model == "1":
             model()

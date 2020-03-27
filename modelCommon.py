@@ -130,7 +130,6 @@ class Common():
                 break
         # remove uncommon words  
         accept_words = [x.lower() for x in accept_words]
-        print(accept_words)
         print(text[2])
         text = text.apply(lambda x: nltk.word_tokenize(x)).apply(lambda x: " ".join([word for word in x if word.lower() in accept_words]))
         print(text[2])

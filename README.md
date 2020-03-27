@@ -1,6 +1,6 @@
 # Finding the Optimal Summary By Combining Extractive and Abstractive Summarization Methods.
 
-In modern-day society, we are surrounded by data, most of which is too long and laborious for the everyday person to read comprehensively. With the art of generating extractive summaries becoming increasingly trivial, the challenge of producing abstractive summaries that can understand and convey the meaning of a document remains prominent within the field of natural language processing. Although summarisation is a task that humans can easily complete, developing automated approaches that can generalise well with different data formats remains a challenge. Despite a recent surge in research to improve abstractive summarisation methods, there are still outstanding issues regarding the validity of generated summaries. The method proposed experiments with combining extractive and abstractive summarisation methods, to evaluate whether these extractive methods can be effective in driving more human-like abstractive summaries. The overall aims and evaluators are the reduction of repetition, and the improvement of precision, recall and human-judged grammatical correctness.
+In modern-day society, we are surrounded by data, most of which is too long and laborious for the everyday person to read comprehensively. With the art of generating extractive summaries becoming increasingly trivial, the challenge of producing abstractive summaries that can understand and convey the meaning of a document remains prominent within the field of natural language processing. Although summarisation is a task that humans can easily complete, developing automated approaches that can generalise well with different data formats remains a challenge. Despite a recent surge in research to improve abstractive summarisation methods, there are still outstanding problems regarding the validity of generated summaries. The method proposed experiments with combining extractive and abstractive summarisation methods, to evaluate whether extractive methods can be effective in driving more human-like abstractive summaries. The overall aims and evaluators are the reduction of repetition, and the improvement of precision, recall and human-judged grammatical correctness.
 
 ## Setup
 - This project requires Python 3.0+ to run.
@@ -13,7 +13,7 @@ In modern-day society, we are surrounded by data, most of which is too long and 
     ```
     make requirements
     ```
-- To run the GloVe model, download the pretrained word embeddings found [here](https://nlp.stanford.edu/projects/glove/) and ensure they are place on the specified path in a file named "glove".
+- To run the GloVe model, download the pretrained word embeddings found [here](https://nlp.stanford.edu/projects/glove/) and ensure they are place on the specified path in a file named **"glove"**.
 
 ## Run
 - To run data processing with default settings (as shown below)
@@ -24,9 +24,10 @@ In modern-day society, we are surrounded by data, most of which is too long and 
     ```
     make run-model
     ```
-- To alter runtime variables follow the following example
+- To alter runtime variables follow the following examples
     ```
     make run-data TRAIN_DATA_PATH=<> OUTPUT_CSV=<> ...
+    make run-data MODEL_ID="1" CSV_NAME="daily-mail.csv" ...
     ```
 
 *Note: For any machine running python 3.0 via the python3 command, append -labs to the end of any make commands (e.g. make-setup-labs)*
@@ -39,9 +40,9 @@ The default settings for all runtime variables that can be altered are shown bel
     ## Variables
     ### Data Processing
     TRAIN_DATA_PATH="./cnn/originals"
-    OUTPUT_CSV="./data/cnn-tr.csv"
-    TRAIN_DATA_PATH_LABS="/tmp/bhm699/dailymail/originals"
-    OUTPUT_CSV_LABS="/tmp/bhm699/dailymail-wf.csv"
+    OUTPUT_CSV="./data/cnn-all.csv"
+    TRAIN_DATA_PATH_LABS="/tmp/bhm699/cnn/originals"
+    OUTPUT_CSV_LABS="/tmp/bhm699/cnn-all.csv"
 
     STOP_WORDS=True
     LEMMATIZE=True
@@ -139,7 +140,7 @@ Experimental Features Coding Completion :done,    des1, 2020-02-29, 1d
 
 Section Finalising
 Project Refractoring                    :done,    des1, 2020-03-01, 2020-03-08
-Documentation                           :active,  des1, 2020-03-10, 2020-03-26
+Documentation                           :done,  des1, 2020-03-10, 2020-03-26
 First Draft Completed                   :done,    des1, 2020-02-16, 1d
 Demo Week                               :done,    des1, 2020-03-02, 2020-03-06
 Tweaks Based On Feedback                :done,    des1, 2020-03-07, 2020-03-26
@@ -192,7 +193,7 @@ Experimental Features Coding Completion :done,    des1, 2020-02-29, 1d
 
 Section Finalising
 Project Refractoring                    :done,    des1, 2020-02-20, 2020-02-23
-Documentation                           :active,  des1, 2020-02-15, 2020-03-26
+Documentation                           :done,    des1, 2020-02-15, 2020-03-26
 First Draft Completed                   :done,    des1, 2020-02-16, 1d
 Demo                                    :done,    des1, 2020-03-02, 2020-03-04
 Tweaks Based On Feedback                :done,    des1, 2020-03-05, 2020-03-06

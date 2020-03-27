@@ -59,8 +59,6 @@ class UniModel():
         # Get word index's from tokenizers
         reverse_source_word_index = self.x_tokenizer.index_word
         reverse_target_word_index = self.y_tokenizer.index_word
-        print(reverse_source_word_index)
-        print(reverse_target_word_index)
         # get max target word index
         target_word_index = self.y_tokenizer.word_index
 
@@ -269,8 +267,6 @@ class BiModel():
         # Get word index's from tokenizers
         reverse_source_word_index = self.x_tokenizer.index_word
         reverse_target_word_index = self.y_tokenizer.index_word
-        print(reverse_source_word_index)
-        print(reverse_target_word_index)
         # get max target word index
         target_word_index = self.y_tokenizer.word_index
 
@@ -516,8 +512,6 @@ class GloveModel():
         # Get word index's from tokenizers
         reverse_source_word_index = self.x_tokenizer.index_word
         reverse_target_word_index = self.y_tokenizer.index_word
-        print(reverse_source_word_index)
-        print(reverse_target_word_index)
         # get max target word index
         target_word_index = self.y_tokenizer.word_index
 

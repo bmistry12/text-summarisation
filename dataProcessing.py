@@ -65,7 +65,6 @@ class CleanData():
         """
             Cleaning Data when sentPos=True. We pass in an array of tokenized sentences that need to be cleaned and have <eos> tokens appended to the end.
         """
-        print("sent_pos_clean")
         doc = [re.sub(r'\(CNN\)|(Daily\sMail)|--|[^\w\s\.]', '', x) for x in doc]
         doc = [re.sub(r'(\.(?=[\s\r\n]|$))', '', x) for x in doc]
         doc = [re.sub(r'\n', ' ', x) for x in doc]
@@ -87,7 +86,6 @@ class CleanData():
         self.df.dropna(axis=0, inplace=True)  # dropping na
         # clean texts
         if (sentPos == "True"):
-            print("sent position clean")
             # add in eos tokens
             self.df['text'] = self.df['text'].apply(lambda x: nltk.sent_tokenize(x, language='english')).apply(lambda x: self.sent_pos_clean(x))            
         else: 
@@ -150,7 +148,6 @@ class CleanData():
                 self.df['text'][i] = text_lemmatized
         else:
             print("lemmatize w/o POS")
-            # This currently doesn't output text in the right format (I think)
             self.df['text'] = text_tokenized.apply(
                 lambda x: [lemmatizer.lemmatize(w) for w in x])
             self.df['text'] = self.df['text'].apply(lambda x: ' '.join(x))

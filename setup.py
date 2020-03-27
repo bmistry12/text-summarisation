@@ -8,6 +8,6 @@ setup(
 	long_description=open('README.md').read(),
     author='bhm699',
     py_modules=['main'],
-    install_requires=['numpy', 'pandas', 'sklearn', 'keras', 'matplotlib', 'rouge', ' networkx'],
+    install_requires=['numpy', 'pandas', 'scikit-learn', 'keras', 'matplotlib', 'rouge', ' networkx'],
     include_package_data=True,
 )
